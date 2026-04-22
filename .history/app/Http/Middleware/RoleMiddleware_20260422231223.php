@@ -20,13 +20,13 @@ class RoleMiddleware
         if ($role === 'etudiant'){
             if ($user->role !== 'etudiant' && $user->role !== 'enseignant'){
                 return response()->json([
-                    'message'=>'Accès refusé !'
-                ],403);
+                    'message' => 'Accès refusé !'
+                ], 403);
             }
         } else {
             if ($user->role !== $role) {
                 return response()->json([
-                    'message'=>'Accès refusé !'
+                    'message' => 'Accès refusé !'
                 ], 403);
             }
         }
