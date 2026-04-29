@@ -88,8 +88,9 @@ class EnseignantController extends Controller
             'tarifHeure'=>'required|numeric|min:5',
             'langues'=>'string'
         ]);
-
+        
         $enseignant = Enseignant::where('utilisateur_id', Auth::id())->first();
+
         $enseignant->update($request->only([  
             'titre',
             'description_cours',
