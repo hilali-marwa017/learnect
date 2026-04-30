@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OffreController extends Controller
 {
-    // liste des offres d'une demande
     public function index($id_demande){
         //verifier que la demamde existe
         $demande = Demande::find($id_demande);
@@ -27,7 +26,7 @@ class OffreController extends Controller
     }
 
     //mes offres (enseignant connectee)
-    public function mesOffres(){
+    public function mesOfrres(){
         $offres = Offre::with('demande')->where('id_enseignant',Auth::id())->get();
         return response()->json($offres);
     }
@@ -45,7 +44,7 @@ class OffreController extends Controller
         if (!$demande){
             return response()->json([
                 'message'=>'Demande introuvable ou expirée !'
-            ],404);
+            ], 404);
         }
 
         // verifier que l'enseignant n'a pas deja envoye une offre
@@ -56,59 +55,20 @@ class OffreController extends Controller
             ],400);
         }
         $offre = Offre::create([
-            'prix'=>$request->prix,
-            'message'=> $request->message,
-            'statut'=>'en_attente',
-            'id_demande'=>$request->id_demande,
-            'id_enseignant'=>Auth::id(),
+            'prix'=> $request->prix,
+            'message'       => $request->message,
+            'statut'        => 'en_attente',
+            'id_demande'    => $request->id_demande,
+            'id_enseignant' => Auth::id(),
         ]);
 
         return response()->json([
-            'message'=>'Offre envoyée avec succès !',
-            'offre'=>$offre,
-        ],201);
-    }
-    //accepter une offre
-    public function accepter($id){
-        $offre = Offre::where('id_offre',$id)->first();
+            'message' => 'Offre envoyée avec succès !',
+            'offre'   => $offre,
+        ], 201);
 
-        if (!$offre){
-            return response()->json([
-                'message'=>'Offre introuvable !'
-            ],404);
-        }
-        //accepter une offre
-        $offre->update(['statut'=>'acceptee']);
 
-        // refuser toutes les autres offres de cette demande
-        Offre::where('id_demande', $offre->id_demande)->where('id_offre', '!=', $id)->update(['statut' => 'refusee']);
 
-        // marquer la demande comme acceptee
-        Demande::where('id_demande',$offre->id_demande)->update(['statut' => 'acceptee']);
-
-        return response()->json([
-            'message'=>'Offre acceptée avec succès !',
-            'offre'=>$offre,
-        ]);
-    }
-
-    // Refuser une offre — etudiant
-    public function refuser($id)
-    {
-        $offre = Offre::where('id_offre', $id)->first();
-
-        if (!$offre) {
-            return response()->json([
-                'message'=>'Offre introuvable !'
-            ],404);
-        }
-
-        $offre->update(['statut'=>'refusee']);
-
-        return response()->json([
-            'message'=>'Offre refusée !',
-            'offre'=>$offre,
-        ]);
     }
     
 }

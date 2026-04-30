@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OffreController extends Controller
 {
-    // liste des offres d'une demande
+    // l iste des offres d'une demande
     public function index($id_demande){
         //verifier que la demamde existe
         $demande = Demande::find($id_demande);

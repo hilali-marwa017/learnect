@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OffreController extends Controller
 {
-    // liste des offres d'une demande
     public function index($id_demande){
         //verifier que la demamde existe
         $demande = Demande::find($id_demande);
@@ -27,7 +26,7 @@ class OffreController extends Controller
     }
 
     //mes offres (enseignant connectee)
-    public function mesOffres(){
+    public function mesOfrres(){
         $offres = Offre::with('demande')->where('id_enseignant',Auth::id())->get();
         return response()->json($offres);
     }
