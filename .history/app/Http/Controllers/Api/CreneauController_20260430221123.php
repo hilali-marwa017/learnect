@@ -52,11 +52,12 @@ class CreneauController extends Controller
             'heureFin'=>'date_format:H:i',
         ]);
 
-        $creneau = Creneau::where('id_creneau', $id)->where('id_enseignant', Auth::id())->first();
+        $creneau = Creneau::where('id_creneau', $id)->where('id_enseignant', Auth::id())
+                          ->first();
 
-        if (!$creneau){
+        if (!$creneau) {
             return response()->json([
-                'message'=>'Créneau introuvable !'
+                'message' => 'Créneau introuvable !'
             ], 404);
         }
 
@@ -68,25 +69,28 @@ class CreneauController extends Controller
         ]));
 
         return response()->json([
-            'message'=>'Créneau modifié avec succès !',
-            'creneau'=>$creneau,
+            'message' => 'Créneau modifié avec succès !',
+            'creneau' => $creneau,
         ]);
     }
 
     // Supprimer un creneau
-    public function destroy($id){
-        $creneau = Creneau::where('id_creneau', $id)->where('id_enseignant', Auth::id())->first();
+    public function destroy($id)
+    {
+        $creneau = Creneau::where('id_creneau', $id)
+                          ->where('id_enseignant', Auth::id())
+                          ->first();
 
-        if (!$creneau){
+        if (!$creneau) {
             return response()->json([
-                'message'=>'Créneau introuvable !'
+                'message' => 'Créneau introuvable !'
             ], 404);
         }
 
         $creneau->delete();
 
         return response()->json([
-            'message'=>'Créneau supprimé avec succès !'
+            'message' => 'Créneau supprimé avec succès !'
         ]);
     }
 }

@@ -77,16 +77,16 @@ class CreneauController extends Controller
     public function destroy($id){
         $creneau = Creneau::where('id_creneau', $id)->where('id_enseignant', Auth::id())->first();
 
-        if (!$creneau){
+        if (!$creneau) {
             return response()->json([
-                'message'=>'Créneau introuvable !'
+                'message' => 'Créneau introuvable !'
             ], 404);
         }
 
         $creneau->delete();
 
         return response()->json([
-            'message'=>'Créneau supprimé avec succès !'
+            'message' => 'Créneau supprimé avec succès !'
         ]);
     }
 }

@@ -18,7 +18,7 @@ class CreneauController extends Controller
                 'message'=>'Enseignant introuvable !'
             ], 404);
         }
-        $creneaux = Creneau::where('id_enseignant', $id)->get();
+        git add .
         return response()->json($creneaux);
     }
 

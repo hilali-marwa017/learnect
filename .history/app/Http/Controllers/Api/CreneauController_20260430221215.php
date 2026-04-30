@@ -79,14 +79,14 @@ class CreneauController extends Controller
 
         if (!$creneau){
             return response()->json([
-                'message'=>'Créneau introuvable !'
+                'message' => 'Créneau introuvable !'
             ], 404);
         }
 
         $creneau->delete();
 
         return response()->json([
-            'message'=>'Créneau supprimé avec succès !'
+            'message' => 'Créneau supprimé avec succès !'
         ]);
     }
 }
