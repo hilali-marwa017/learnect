@@ -33,37 +33,8 @@ class DemandeController extends Controller
             'budgetMax'=>'required|numeric|min:0|gte:budgetMin', // >=
             'ville'=>'required|string',
         ]);
+        $demande
 
-        $demande = Demande::create([
-            'matiere'=>$request->matiere,
-            'niveau'=>$request->niveau,
-            'budgetMin'=>$request->budgetMin,
-            'budgetMax'=>$request->budgetMax,
-            'ville'=>$request->ville,
-            'statut'=>'active',
-            'expire_at'=>Carbon::now()->addHours(48), //apres 48h la demande expire automatiquement
-            'id_utilisateur'=>Auth::id(),
-        ]);
-
-        return response()->json([
-            'message'=>'Demande publiée avec succès !',
-            'demande'=>$demande,
-        ], 201);
-    }
-
-    //supprimer une demande
-    public function destroy($id){
-        $demande = Demande::where('id_demande',$id)->where('id_utilisateur',Auth::id())->first();
-        if(!$demande){
-            return response()->json([
-                'message'=>'Demande introuvable !'
-            ],404);
-        }
-        $demande->delete();
-
-        return response()->json([
-            'message'=>'Demande supprimée avec succès !'
-        ]);
     }
     
 }

@@ -34,7 +34,7 @@ class DemandeController extends Controller
             'ville'=>'required|string',
         ]);
 
-        $demande = Demande::create([
+        $demande = Demande::Create([
             'matiere'=>$request->matiere,
             'niveau'=>$request->niveau,
             'budgetMin'=>$request->budgetMin,
@@ -49,21 +49,7 @@ class DemandeController extends Controller
             'message'=>'Demande publiée avec succès !',
             'demande'=>$demande,
         ], 201);
-    }
 
-    //supprimer une demande
-    public function destroy($id){
-        $demande = Demande::where('id_demande',$id)->where('id_utilisateur',Auth::id())->first();
-        if(!$demande){
-            return response()->json([
-                'message'=>'Demande introuvable !'
-            ],404);
-        }
-        $demande->delete();
-
-        return response()->json([
-            'message'=>'Demande supprimée avec succès !'
-        ]);
     }
     
 }

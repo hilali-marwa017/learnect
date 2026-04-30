@@ -57,7 +57,7 @@ class DemandeController extends Controller
         if(!$demande){
             return response()->json([
                 'message'=>'Demande introuvable !'
-            ],404);
+            ]);
         }
         $demande->delete();
 
