@@ -76,7 +76,7 @@ class ReservationController extends Controller
         return response()->json([
             'message'=>'Réservation créée avec succès !',
             'reservation'=>$reservation,
-        ],201);
+        ], 201);
     }
     // confirmer paiement — reveler numero whatsapp
     public function confirmerPaiement($id){
@@ -85,7 +85,7 @@ class ReservationController extends Controller
         if (!$reservation){
             return response()->json([
                 'message' => 'Réservation introuvable !'
-            ],404);
+            ], 404);
         }
 
         // confirmer la reservation

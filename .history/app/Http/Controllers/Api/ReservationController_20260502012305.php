@@ -67,16 +67,16 @@ class ReservationController extends Controller
         Paiement::create([
             'montantTotal'=>$montant,
             'comission'=>$comission,
-            'montantEnseignant'=>$montant - $comission,
-            'methode'=>'simulation',
-            'statut'=>'en_attente',
-            'id_reservation'=>$reservation->id_reservation,
+            'montantEnseignant' =>$montant - $comission,
+            'methode'           =>'simulation',
+            'statut'            =>'en_attente',
+            'id_reservation'    =>$reservation->id_reservation,
         ]);
 
         return response()->json([
-            'message'=>'Réservation créée avec succès !',
-            'reservation'=>$reservation,
-        ],201);
+            'message'     => 'Réservation créée avec succès !',
+            'reservation' => $reservation,
+        ], 201);
     }
     // confirmer paiement — reveler numero whatsapp
     public function confirmerPaiement($id){
@@ -85,7 +85,7 @@ class ReservationController extends Controller
         if (!$reservation){
             return response()->json([
                 'message' => 'Réservation introuvable !'
-            ],404);
+            ], 404);
         }
 
         // confirmer la reservation

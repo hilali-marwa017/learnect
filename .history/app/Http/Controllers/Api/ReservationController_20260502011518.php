@@ -18,8 +18,9 @@ class ReservationController extends Controller
         return response()->json($reservations);
     }
 
+    // reserver un cours
     public function store(Request $request){
-        // validation
+        
         $request->validate([
             'id_creneau'=>'required|exists:creneaux,id_creneau',
             'date'=>'required|date|after:today|before:+1 year',
@@ -29,7 +30,8 @@ class ReservationController extends Controller
         // recuperer le creneau
         $creneau = Creneau::where('id_creneau', $request->id_creneau)->where('estDisponible', true)->first();
 
-        if (!$creneau) {
+        // verifier que le creneau est disponible
+        if (!$creneau){
             return response()->json([
                 'message'=>'Créneau non disponible !'
             ],400);
@@ -38,30 +40,25 @@ class ReservationController extends Controller
         // calculer le montant
         $montant = $creneau->enseignant->tarifHeure;
 
-        if ($request->id_offre) {
+        if ($request->id_offre){
             $offre = Offre::find($request->id_offre);
-            if (!$offre) {
-                return response()->json([
-                    'message' => 'Offre introuvable !'
-                ],404);
-            }
             $montant = $offre->prix;
         }
 
         // creer la reservation
         $reservation = Reservation::create([
-            'date'=>$request->date,
-            'montant'=>$montant,
-            'statut'=>'en_attente',
-            'id_utilisateur'=>Auth::id(),
-            'id_creneau'=>$request->id_creneau,
-            'id_offre'=>$request->id_offre,
+            'date'=> $request->date,
+            'montant'=> $montant,
+            'statut'=> 'en_attente',
+            'id_utilisateur'=> Auth::id(),
+            'id_creneau'=> $request->id_creneau,
+            'id_offre'=> $request->id_offre,
         ]);
 
-        // 5. Marquer le creneau indispo
+        // marquer le creneau indispo
         $creneau->update(['estDisponible'=>false]);
 
-        // 6. Creer le paiement simule
+        // creer le paiement simule
         $comission = $montant * 0.10;
 
         Paiement::create([
@@ -76,8 +73,9 @@ class ReservationController extends Controller
         return response()->json([
             'message'=>'Réservation créée avec succès !',
             'reservation'=>$reservation,
-        ],201);
+        ], 201);
     }
+
     // confirmer paiement — reveler numero whatsapp
     public function confirmerPaiement($id){
         $reservation = Reservation::with('creneau.enseignant.user')->where('id_reservation', $id)->where('id_utilisateur', Auth::id())->first();
@@ -85,7 +83,7 @@ class ReservationController extends Controller
         if (!$reservation){
             return response()->json([
                 'message' => 'Réservation introuvable !'
-            ],404);
+            ], 404);
         }
 
         // confirmer la reservation

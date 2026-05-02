@@ -85,7 +85,7 @@ class ReservationController extends Controller
         if (!$reservation){
             return response()->json([
                 'message' => 'Réservation introuvable !'
-            ],404);
+            ], 404);
         }
 
         // confirmer la reservation

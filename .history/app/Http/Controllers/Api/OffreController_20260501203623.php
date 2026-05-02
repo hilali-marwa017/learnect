@@ -36,7 +36,7 @@ class OffreController extends Controller
     public function store(Request $request){
         $request->validate([
             'prix'=>'required|numeric|min:0',
-            'message'=>'required|string|min:5',
+            'message'=>'required|string|min:',
             'id_demande'=>'required|exists:demandes,id_demande',
         ]);
 
