@@ -9,7 +9,8 @@ class Etudiant extends Model
     use HasFactory;
 
     protected $primaryKey = 'utilisateur_id';
-    public $incrementing  = false;  //fk 
+    protected $primaryKey = 'utilisateur_id';
+public $incrementing  = false; // ✅ ajoute ça
     protected $fillable = ['utilisateur_id','niveau','budget'];
 
     // Appartient a un user
