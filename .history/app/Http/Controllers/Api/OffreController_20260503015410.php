@@ -40,8 +40,8 @@ class OffreController extends Controller
             'id_demande'=>'required|exists:demandes,id_demande',
         ]);
 
-        // verifier que la demande est activee
-        $demande = Demande::where('id_demande', $request->id_demande)->where('statut','active')->first();
+        // verifier que la demande est active
+        $demande = Demande::where('id_demande', $request->id_demande)->where('statut', 'active')->first();
         if (!$demande){
             return response()->json([
                 'message'=>'Demande introuvable ou expirée !'
@@ -50,7 +50,7 @@ class OffreController extends Controller
 
         // verifier que l'enseignant n'a pas deja envoye une offre
         $offreExistante = Offre::where('id_demande', $request->id_demande)->where('id_enseignant', Auth::id())->first();
-        if ($offreExistante){
+        if ($offreExistante){}
             return response()->json([
                 'message'=>'Vous avez déjà envoyé une offre !'
             ],400);
@@ -77,9 +77,6 @@ class OffreController extends Controller
                 'message'=>'Offre introuvable !'
             ],404);
         }
-        //verifier que c bien etudiant
-
-
         //accepter une offre
         $offre->update(['statut'=>'acceptee']);
 

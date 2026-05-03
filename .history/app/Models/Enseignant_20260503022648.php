@@ -9,7 +9,7 @@ class Enseignant extends Model
     use HasFactory;
 
     protected $primaryKey = 'utilisateur_id';
-    public $incrementing  = false; //FK pas AutoIncrement
+    public $incrementing  = false; // ✅ car c'est une FK pas auto-increment
     protected $fillable = ['utilisateur_id','cin_recto','cin_verso','diplome','titre','description_cours','description_profil','cours_domicile','cours_deplacement','cours_enligne','distance_max','langues','tarifHeure','estVerifie','noteMoyenne','statut_annonce'];
 
     // Appartient a un user

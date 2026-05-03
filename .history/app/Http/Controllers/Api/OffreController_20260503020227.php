@@ -49,7 +49,7 @@ class OffreController extends Controller
         }
 
         // verifier que l'enseignant n'a pas deja envoye une offre
-        $offreExistante = Offre::where('id_demande', $request->id_demande)->where('id_enseignant', Auth::id())->first();
+        $offreExistante = Offre::where('id_demande', $request->id_demande)->where('id_enseignant', Auth::id())->where('statut','en_attente')->first();
         if ($offreExistante){
             return response()->json([
                 'message'=>'Vous avez déjà envoyé une offre !'
@@ -77,8 +77,7 @@ class OffreController extends Controller
                 'message'=>'Offre introuvable !'
             ],404);
         }
-        //verifier que c bien etudiant
-
+        //vrifier q
 
         //accepter une offre
         $offre->update(['statut'=>'acceptee']);

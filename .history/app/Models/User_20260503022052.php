@@ -17,7 +17,12 @@ class User extends Authenticatable
     protected $hidden = ['password'];
 
     protected function casts(): array{
-        return ['password'=>'hashed'];
+        return 
+            ['password'=>'hashed',
+            'can_teach' => 'boolean',
+            'can_learn' => 'boolean'
+
+            ];
     }
 
     // 1,1 

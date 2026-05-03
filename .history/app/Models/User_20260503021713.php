@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     protected $primaryKey = 'utilisateur_id';
 
-    protected $fillable = ['nom','prenom','email','password','telephone','ville','photo','role','statut','can_teach','can_learn'];
+    protected $fillable = ['nom','prenom','email','password','telephone','ville','photo','role','statut'];
 
     protected $hidden = ['password'];
 
@@ -31,7 +31,7 @@ class User extends Authenticatable
     }
 
     // 0,n 
-    public function mesNotifications(){
+    public function notifications(){
         return $this->hasMany(Notification::class, 'utilisateur_id', 'utilisateur_id');
     }
 
