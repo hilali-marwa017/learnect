@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Avis;
+use App\Models\Reservation;
+use App\Models\Enseignant;
+use Illuminate\Support\Facades\Auth;
+
+class AvisController extends Controller
+{
+    //liste des avis d'un enseignant
+    public function index($id_enseignant){
+        $enseignant = Enseignant::find($id_enseignant);
+    }
+}
