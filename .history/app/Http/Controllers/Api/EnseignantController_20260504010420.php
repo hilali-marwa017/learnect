@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Enseignant; 
-use App\Models\User;
+use App\Models\Enseignant; //pour acceder a la table enseignant
+use App\Models\User;//pour acceder a la table users
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 

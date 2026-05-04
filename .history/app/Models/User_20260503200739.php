@@ -40,10 +40,10 @@ class User extends Authenticatable
         return $this->hasMany(Message::class,'id_expediteur','utilisateur_id');
     }
     
-    // 0,n messages reçus
-    public function messagesRecus(){
-        return $this->hasMany(Message::class,'id_destinataire','utilisateur_id');
-    }
+        // 0,n messages reçus
+        public function messagesRecus(){
+            return $this->hasMany(Message::class,'id_destinataire','utilisateur_id');
+        }
 
     // 0,n 
     public function otpVerifications(){

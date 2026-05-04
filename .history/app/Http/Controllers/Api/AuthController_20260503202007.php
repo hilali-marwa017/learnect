@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     // INSCRIPTION
-    public function register(Request $request){
+    public function register(Request $request)
+    {
+        //1- Validation
         $request->validate([
             'nom'=>'required|string|max:255|min:3',
             'prenom'=>'required|string|max:255|min:3',
@@ -19,87 +21,104 @@ class AuthController extends Controller
             'password'=>'required|min:8|confirmed',
             'telephone'=>'required|string|unique:users,telephone',
             'ville'=>'required|string',
-            'role'=>'required|in:etudiant,enseignant',
+            'role' =>'required|in:etudiant,enseignant',
         ]);
-        // CREER USER
+
+        //2- Creer un user
         $user = User::create([
-            'nom'=>$request->nom,
+            'nom'=>$request->nom,       
             'prenom'=>$request->prenom,
             'email'=>$request->email,
             'password'=>$request->password,
             'telephone'=>$request->telephone,
             'ville'=>$request->ville,
             'role'=>$request->role,
-            'statut'=>'en_attente',
-            'can_learn'=>true,
-            'can_teach'=>$request->role === 'enseignant' ? true : false,
+            'statut'=> 'en_attente',
         ]);
 
-        // CREER USER SELON PROFILE
-        if($request->role === 'etudiant'){
+        //Creer le profile selon le role
+        if ($request->role === 'etudiant'){
             Etudiant::create([
-                'utilisateur_id'=>$user->utilisateur_id,
+                'utilisateur_id' => $user->utilisateur_id,
             ]);
         } else {
             Enseignant::create([
-                'utilisateur_id'=>$user->utilisateur_id,
+                'utilisateur_id' => $user->utilisateur_id,
             ]);
         }
-        // CONNECTER AUTOMATIQUEMENT
+
+        if ($request->role === 'etudiant') {
+            $user->can_learn = true;
+            $user->can_teach = false;
+        } else {
+        $user->can_teach = true;
+        $user->can_learn = $request->boolean('can_learn', false);
+}
+
+        //Connecter automatiquement l'utilisateur
         Auth::login($user);
-        $token = $user->createToken('learnect-token')->plainTextToken;
+
+        //Token Sanctum
+        $token = $user->createToken('learnect-token')->plainTextToken; 
 
         return response()->json([
             'message'=>'Compte créé avec succès !',
             'user'=>$user,
             'token'=>$token,
-        ],201);
+        ], 201);
     }
 
     // CONNEXION
     public function login(Request $request){
+
+        //validation
         $request->validate([
             'email'=>'required|email',
             'password'=>'required',
         ]);
 
-        $credentials = $request->only('email','password');
+        //Tentative connexion 
+        $credentials = $request->only('email', 'password'); 
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)){
+            //Recuperer user connecté
             $user = Auth::user();
-
-            if($user->statut === 'bloque') {
+            //Verifier si bloquee
+            if ($user->statut === 'bloque') {
                 Auth::logout();
                 return response()->json([
                     'message'=>'Votre compte a été bloqué !'
-                ],403);
+                ], 403);
             }
-            // REGENERER UN NV TOKEN
+
             $token = $user->createToken('learnect-token')->plainTextToken;
 
             return response()->json([
                 'message'=>'Connecté avec succès !',
-                'user'=>$user,
-                'token'=>$token,
+                'user'=> $user,
+                'token'=> $token,
             ]);
         }
 
+        //Echec
         return response()->json([
             'message'=>'Email ou mot de passe incorrect'
-        ],401);
+        ], 401);
     }
 
     // DECONNEXION
     public function logout(Request $request){
-        auth('sanctum')->user()->currentAccessToken()->delete();
+        //Supprimer token Sanctum
+        auth('sanctum')->user()->tokens()->delete();
 
         return response()->json([
             'message'=>'Déconnecté avec succès !',
         ]);
     }
 
-    // UTILISATEUR CONNECTEE
-    public function me(Request $request){
-        return response()->json(Auth::user());
+    // UTILISATEUR CONNECTEE maintenant
+    public function me (Request $request){
+        return response()->json(Auth::user()); /* Auth::user() retrun the user(object) connected rightNow! */
     }
 }
+

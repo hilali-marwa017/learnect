@@ -74,7 +74,7 @@ class AuthController extends Controller
                     'message'=>'Votre compte a été bloqué !'
                 ],403);
             }
-            // REGENERER UN NV TOKEN
+
             $token = $user->createToken('learnect-token')->plainTextToken;
 
             return response()->json([
@@ -86,7 +86,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message'=>'Email ou mot de passe incorrect'
-        ],401);
+        ], 401);
     }
 
     // DECONNEXION

@@ -36,7 +36,7 @@ class AuthController extends Controller
         ]);
 
         // CREER USER SELON PROFILE
-        if($request->role === 'etudiant'){
+        if ($request->role === 'etudiant'){
             Etudiant::create([
                 'utilisateur_id'=>$user->utilisateur_id,
             ]);
@@ -65,7 +65,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email','password');
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)){
             $user = Auth::user();
 
             if($user->statut === 'bloque') {
@@ -74,19 +74,19 @@ class AuthController extends Controller
                     'message'=>'Votre compte a été bloqué !'
                 ],403);
             }
-            // REGENERER UN NV TOKEN
+
             $token = $user->createToken('learnect-token')->plainTextToken;
 
             return response()->json([
-                'message'=>'Connecté avec succès !',
-                'user'=>$user,
-                'token'=>$token,
+                'message' => 'Connecté avec succès !',
+                'user'    => $user,
+                'token'   => $token,
             ]);
         }
 
         return response()->json([
-            'message'=>'Email ou mot de passe incorrect'
-        ],401);
+            'message' => 'Email ou mot de passe incorrect'
+        ], 401);
     }
 
     // DECONNEXION

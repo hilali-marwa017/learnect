@@ -35,8 +35,7 @@ class AuthController extends Controller
             'can_teach'=>$request->role === 'enseignant' ? true : false,
         ]);
 
-        // CREER USER SELON PROFILE
-        if($request->role === 'etudiant'){
+        if ($request->role === 'etudiant'){
             Etudiant::create([
                 'utilisateur_id'=>$user->utilisateur_id,
             ]);
@@ -45,7 +44,7 @@ class AuthController extends Controller
                 'utilisateur_id'=>$user->utilisateur_id,
             ]);
         }
-        // CONNECTER AUTOMATIQUEMENT
+
         Auth::login($user);
         $token = $user->createToken('learnect-token')->plainTextToken;
 
@@ -60,46 +59,48 @@ class AuthController extends Controller
     public function login(Request $request){
         $request->validate([
             'email'=>'required|email',
-            'password'=>'required',
+            'password' =>'required',
         ]);
 
-        $credentials = $request->only('email','password');
+        $credentials = $request->only('email', 'password');
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            if($user->statut === 'bloque') {
+            if ($user->statut === 'bloque') {
                 Auth::logout();
                 return response()->json([
-                    'message'=>'Votre compte a été bloqué !'
-                ],403);
+                    'message' => 'Votre compte a été bloqué !'
+                ], 403);
             }
-            // REGENERER UN NV TOKEN
+
             $token = $user->createToken('learnect-token')->plainTextToken;
 
             return response()->json([
-                'message'=>'Connecté avec succès !',
-                'user'=>$user,
-                'token'=>$token,
+                'message' => 'Connecté avec succès !',
+                'user'    => $user,
+                'token'   => $token,
             ]);
         }
 
         return response()->json([
-            'message'=>'Email ou mot de passe incorrect'
-        ],401);
+            'message' => 'Email ou mot de passe incorrect'
+        ], 401);
     }
 
     // DECONNEXION
-    public function logout(Request $request){
-        auth('sanctum')->user()->currentAccessToken()->delete();
+    public function logout(Request $request)
+    {
+        auth('sanctum')->user()->tokens()->delete();
 
         return response()->json([
-            'message'=>'Déconnecté avec succès !',
+            'message' => 'Déconnecté avec succès !',
         ]);
     }
 
-    // UTILISATEUR CONNECTEE
-    public function me(Request $request){
+    // UTILISATEUR CONNECTÉ
+    public function me(Request $request)
+    {
         return response()->json(Auth::user());
     }
 }
