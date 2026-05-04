@@ -54,7 +54,8 @@ class EnseignantController extends Controller
     }
 
     // Completer profil enseignant
-    public function completeProfile(Request $request){
+    public function completeProfile(Request $request)
+    {
         $request->validate([
             'titre'=>'required|string|min:10',
             'description_cours'=>'required|string|min:30',
@@ -85,7 +86,8 @@ class EnseignantController extends Controller
     }
 
     // Modifier profil enseignant
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $request->validate([
             'titre'=>'string|min:10',
             'description_cours'=>'string|min:30',
@@ -105,7 +107,8 @@ class EnseignantController extends Controller
     }
 
     // Upload photo profil
-    public function uploadPhoto(Request $request){
+    public function uploadPhoto(Request $request)
+    {
         $request->validate([
             'photo'=>'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
@@ -116,9 +119,9 @@ class EnseignantController extends Controller
             Storage::disk('public')->delete($user->photo);
         }
 
-        $file = $request->file('photo');
-        $filename ='photo_' . Auth::id() . '_' . time() . '.' . $file->getClientOriginalExtension();
-        $user->photo = $file->storeAs('photos/profil', $filename, 'public');
+        $file=$request->file('photo');
+        $filename='photo_' . Auth::id() . '_' . time() . '.' . $file->getClientOriginalExtension();
+        $user->photo= $file->storeAs('photos/profil', $filename, 'public');
         $user->save();
 
         return response()->json([

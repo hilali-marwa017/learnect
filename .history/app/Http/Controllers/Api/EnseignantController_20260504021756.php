@@ -54,7 +54,8 @@ class EnseignantController extends Controller
     }
 
     // Completer profil enseignant
-    public function completeProfile(Request $request){
+    public function completeProfile(Request $request)
+    {
         $request->validate([
             'titre'=>'required|string|min:10',
             'description_cours'=>'required|string|min:30',
@@ -85,7 +86,8 @@ class EnseignantController extends Controller
     }
 
     // Modifier profil enseignant
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $request->validate([
             'titre'=>'string|min:10',
             'description_cours'=>'string|min:30',

@@ -14,7 +14,7 @@ class Enseignant extends Model
 
     // Appartient a un user
     public function user(){
-        return $this->belongsTo(User::class,'utilisateur_id','utilisateur_id');
+        return $this->belongsTo(User::class, 'utilisateur_id','utilisateur_id');
     }
 
     // Plusieurs matieres (many to many)

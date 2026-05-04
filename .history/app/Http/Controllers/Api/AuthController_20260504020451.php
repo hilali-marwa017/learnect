@@ -12,7 +12,6 @@ class AuthController extends Controller
 {
     // INSCRIPTION
     public function register(Request $request){
-        // VALIDATION
         $request->validate([
             'nom'=>'required|string|max:255|min:3',
             'prenom'=>'required|string|max:255|min:3',
@@ -22,7 +21,6 @@ class AuthController extends Controller
             'ville'=>'required|string',
             'role'=>'required|in:etudiant,enseignant',
         ]);
-
         // CREER USER
         $user = User::create([
             'nom'=>$request->nom,
@@ -47,11 +45,10 @@ class AuthController extends Controller
                 'utilisateur_id'=>$user->utilisateur_id,
             ]);
         }
-
         // CONNECTER AUTOMATIQUEMENT
         Auth::login($user);
         $token = $user->createToken('learnect-token')->plainTextToken;
-        
+
         return response()->json([
             'message'=>'Compte créé avec succès !',
             'user'=>$user,
@@ -70,8 +67,7 @@ class AuthController extends Controller
 
         if(Auth::attempt($credentials)){
             $user = Auth::user();
-
-            if($user->statut === 'bloque'){
+            if($user->statut === 'bloque') {
                 Auth::logout();
                 return response()->json([
                     'message'=>'Votre compte a été bloqué !'

@@ -22,7 +22,6 @@ class AuthController extends Controller
             'ville'=>'required|string',
             'role'=>'required|in:etudiant,enseignant',
         ]);
-
         // CREER USER
         $user = User::create([
             'nom'=>$request->nom,
@@ -47,11 +46,10 @@ class AuthController extends Controller
                 'utilisateur_id'=>$user->utilisateur_id,
             ]);
         }
-
         // CONNECTER AUTOMATIQUEMENT
         Auth::login($user);
         $token = $user->createToken('learnect-token')->plainTextToken;
-        
+
         return response()->json([
             'message'=>'Compte créé avec succès !',
             'user'=>$user,
