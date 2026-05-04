@@ -43,85 +43,88 @@ class OffreController extends Controller
             ],404);
         }
 
-        // Verifier les offres dupliquees
-        $offreExistante = Offre::where('id_demande',$request->id_demande)->where('id_enseignant',Auth::id())->first();
+        $offreExistante = Offre::where('id_demande', $request->id_demande)->where('id_enseignant', Auth::id())
+                               ->first();
 
         if ($offreExistante) {
             return response()->json([
-                'message'=>'Vous avez déjà envoyé une offre !'
-            ],400);
+                'message' => 'Vous avez déjà envoyé une offre !'
+            ], 400);
         }
 
-        // Creer une offre
         $offre = Offre::create([
-            'prix'=>$request->prix,
-            'message'=>$request->message,
-            'statut'=>'en_attente',
-            'id_demande'=>$request->id_demande,
-            'id_enseignant'=>Auth::id(),
+            'prix'          => $request->prix,
+            'message'       => $request->message,
+            'statut'        => 'en_attente',
+            'id_demande'    => $request->id_demande,
+            'id_enseignant' => Auth::id(),
         ]);
 
         return response()->json([
-            'message'=>'Offre envoyée avec succès !',
-            'offre'=>$offre,
-        ],201);
+            'message' => 'Offre envoyée avec succès !',
+            'offre'   => $offre,
+        ], 201);
     }
 
     // Accepter une offre 
-    public function accepter($id){
-        $offre = Offre::find($id); 
+    public function accepter($id)
+    {
+        $offre = Offre::find($id);
 
-        if (!$offre){
+        if (!$offre) {
             return response()->json([
-                'message'=>'Offre introuvable !'
-            ],404);
+                'message' => 'Offre introuvable !'
+            ], 404);
         }
 
-        $demande = Demande::find($offre->id_demande);// recuperer demande reliee avec offre
+        $demande = Demande::find($offre->id_demande);
 
-        // Verifier la demande existe et appartient a l'etudiant connectee sinon refusee
         if (!$demande || $demande->id_utilisateur != Auth::id()) {
             return response()->json([
-                'message'=>'Non autorisé !'
-            ],403);
+                'message' => 'Non autorisé !'
+            ], 403);
         }
 
-        $offre->update(['statut'=>'acceptee']);
+        $offre->update(['statut' => 'acceptee']);
 
-        // refuser toutes les autres offres 
-        Offre::where('id_demande',$offre->id_demande)->where('id_offre','!=', $id)->update(['statut'=>'refusee']);
-        // marquer la demande accpetee quand une offre choisit
-        Demande::where('id_demande',$offre->id_demande)->update(['statut'=>'acceptee']);
+        // Refuser toutes les autres offres
+        Offre::where('id_demande', $offre->id_demande)
+             ->where('id_offre', '!=', $id)
+             ->update(['statut' => 'refusee']);
+
+        Demande::where('id_demande', $offre->id_demande)
+               ->update(['statut' => 'acceptee']);
 
         return response()->json([
-            'message'=>'Offre acceptée avec succès !',
-            'offre'=>$offre,
+            'message' => 'Offre acceptée avec succès !',
+            'offre'   => $offre,
         ]);
     }
 
     // Refuser une offre
-    public function refuser($id){
+    public function refuser($id)
+    {
         $offre = Offre::find($id);
 
-        if (!$offre){
+        if (!$offre) {
             return response()->json([
-                'message'=>'Offre introuvable !'
-            ],404);
+                'message' => 'Offre introuvable !'
+            ], 404);
         }
-        // recuperer la demande d'une offre
+
         $demande = Demande::find($offre->id_demande);
 
-        if (!$demande || $demande->id_utilisateur != Auth::id()){
+        if (!$demande || $demande->id_utilisateur != Auth::id()) {
             return response()->json([
-                'message'=>'Non autorisé !'
-            ],403);
+                'message' => 'Non autorisé !'
+            ], 403);
         }
 
-        $offre->update(['statut'=>'refusee']);
+        $offre->update(['statut' => 'refusee']);
 
         return response()->json([
-            'message'=>'Offre refusée !',
-            'offre'=>$offre,
+            'message' => 'Offre refusée !',
+            'offre'   => $offre,
         ]);
     }
 }

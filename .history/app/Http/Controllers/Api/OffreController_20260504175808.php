@@ -90,7 +90,7 @@ class OffreController extends Controller
 
         // refuser toutes les autres offres 
         Offre::where('id_demande',$offre->id_demande)->where('id_offre','!=', $id)->update(['statut'=>'refusee']);
-        // marquer la demande accpetee quand une offre choisit
+
         Demande::where('id_demande',$offre->id_demande)->update(['statut'=>'acceptee']);
 
         return response()->json([
@@ -108,7 +108,7 @@ class OffreController extends Controller
                 'message'=>'Offre introuvable !'
             ],404);
         }
-        // recuperer la demande d'une offre
+
         $demande = Demande::find($offre->id_demande);
 
         if (!$demande || $demande->id_utilisateur != Auth::id()){

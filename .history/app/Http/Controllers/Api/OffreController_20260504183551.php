@@ -108,8 +108,8 @@ class OffreController extends Controller
                 'message'=>'Offre introuvable !'
             ],404);
         }
-        // recuperer la demande d'une offre
-        $demande = Demande::find($offre->id_demande);
+
+        $demande = Demande::find($offre->id_demande);// recuperer la demande d'une
 
         if (!$demande || $demande->id_utilisateur != Auth::id()){
             return response()->json([
