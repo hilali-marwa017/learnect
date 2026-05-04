@@ -136,18 +136,15 @@ class EnseignantController extends Controller
         ]);
 
         $enseignant = Enseignant::where('utilisateur_id', Auth::id())->first();
-
-        // CIN recto
+        
         $fileRecto = $request->file('cin_recto');
         $nameRecto ='cin_recto_' . Auth::id() . '_' . time() . '.' . $fileRecto->getClientOriginalExtension();
         $enseignant->cin_recto = $fileRecto->storeAs('documents/cin', $nameRecto, 'public');
-        
-        //CIN verso
+
         $fileVerso = $request->file('cin_verso');
         $nameVerso= 'cin_verso_' . Auth::id() . '_' . time() . '.' . $fileVerso->getClientOriginalExtension();
         $enseignant->cin_verso = $fileVerso->storeAs('documents/cin', $nameVerso, 'public');
 
-        //Diplome
         $fileDiplome = $request->file('diplome');
         $nameDiplome = 'diplome_' . Auth::id() . '_' . time() . '.' . $fileDiplome->getClientOriginalExtension();
         $enseignant->diplome  = $fileDiplome->storeAs('documents/diplome', $nameDiplome, 'public');

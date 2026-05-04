@@ -147,7 +147,6 @@ class EnseignantController extends Controller
         $nameVerso= 'cin_verso_' . Auth::id() . '_' . time() . '.' . $fileVerso->getClientOriginalExtension();
         $enseignant->cin_verso = $fileVerso->storeAs('documents/cin', $nameVerso, 'public');
 
-        //Diplome
         $fileDiplome = $request->file('diplome');
         $nameDiplome = 'diplome_' . Auth::id() . '_' . time() . '.' . $fileDiplome->getClientOriginalExtension();
         $enseignant->diplome  = $fileDiplome->storeAs('documents/diplome', $nameDiplome, 'public');

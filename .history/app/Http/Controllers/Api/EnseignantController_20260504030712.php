@@ -60,7 +60,7 @@ class EnseignantController extends Controller
             'description_cours'=>'required|string|min:30',
             'description_profil'=>'required|string|min:30',
             'tarifHeure'=>'required|numeric|min:5',
-            'langues'=>'required|string'
+            'langues'=>'required|string',
         ]);
 
         $enseignant = Enseignant::where('utilisateur_id',Auth::id())->first();
@@ -75,12 +75,12 @@ class EnseignantController extends Controller
             'distance_max'=>$request->distance_max,
             'langues'=>$request->langues,
             'tarifHeure'=>$request->tarifHeure,
-            'statut_annonce'=>'en_ligne'
+            'statut_annonce'=>'en_ligne',
         ]);
 
         return response()->json([
             'message'=>'Profil complété avec succès !',
-            'enseignant'=>$enseignant
+            'enseignant'=>$enseignant,
         ]);
     }
 
@@ -91,7 +91,7 @@ class EnseignantController extends Controller
             'description_cours'=>'string|min:30',
             'description_profil'=>'string|min:30',
             'tarifHeure'=>'numeric|min:5',
-            'langues'=>'string'
+            'langues'=>'string',
         ]);
 
         $enseignant = Enseignant::where('utilisateur_id',Auth::id())->first();
@@ -100,7 +100,7 @@ class EnseignantController extends Controller
 
         return response()->json([
             'message'=>'Profil modifié avec succès !',
-            'enseignant'=>$enseignant
+            'enseignant'=>$enseignant,
         ]);
     }
 
@@ -123,7 +123,7 @@ class EnseignantController extends Controller
 
         return response()->json([
             'message'=>'Photo uploadée avec succès !',
-            'photo'=>$user->photo //Saved path
+            'photo'=>$user->photo
         ]);
     }
 
@@ -132,22 +132,19 @@ class EnseignantController extends Controller
         $request->validate([
             'cin_recto'=>'required|image|mimes:jpg,jpeg,png|max:2048',
             'cin_verso'=>'required|image|mimes:jpg,jpeg,png|max:2048',
-            'diplome'=>'required|image|mimes:jpg,jpeg,png|max:2048'
+            'diplome'=>'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $enseignant = Enseignant::where('utilisateur_id', Auth::id())->first();
 
-        // CIN recto
         $fileRecto = $request->file('cin_recto');
         $nameRecto ='cin_recto_' . Auth::id() . '_' . time() . '.' . $fileRecto->getClientOriginalExtension();
         $enseignant->cin_recto = $fileRecto->storeAs('documents/cin', $nameRecto, 'public');
-        
-        //CIN verso
+
         $fileVerso = $request->file('cin_verso');
         $nameVerso= 'cin_verso_' . Auth::id() . '_' . time() . '.' . $fileVerso->getClientOriginalExtension();
         $enseignant->cin_verso = $fileVerso->storeAs('documents/cin', $nameVerso, 'public');
 
-        //Diplome
         $fileDiplome = $request->file('diplome');
         $nameDiplome = 'diplome_' . Auth::id() . '_' . time() . '.' . $fileDiplome->getClientOriginalExtension();
         $enseignant->diplome  = $fileDiplome->storeAs('documents/diplome', $nameDiplome, 'public');
@@ -156,7 +153,7 @@ class EnseignantController extends Controller
 
         return response()->json([
             'message'=>'Documents uploadés avec succès !',
-            'enseignant'=>$enseignant
+            'enseignant'=>$enseignant,
         ]);
     }
 
@@ -179,7 +176,7 @@ class EnseignantController extends Controller
 
         return response()->json([
             'enseignant'=>$enseignant,
-            'stats'=>$stats
+            'stats'=>$stats,
         ]);
     }
 }
