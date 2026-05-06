@@ -36,6 +36,8 @@ class AuthController extends Controller
             'can_learn'=>true,
             'can_teach'=>$request->role === 'enseignant' ? true : false,
         ]);
+        
+        dd(Auth::user());
 
         // CREER USER SELON PROFILE
         if($request->role === 'etudiant'){
@@ -94,7 +96,7 @@ class AuthController extends Controller
 
     // DECONNEXION
     public function logout(Request $request){
-        auth('sanctum')->user()->tokens()->delete();
+        auth('sanctum')->user()->currentAccessToken()->delete();
 
         return response()->json([
             'message'=>'Déconnecté avec succès !',

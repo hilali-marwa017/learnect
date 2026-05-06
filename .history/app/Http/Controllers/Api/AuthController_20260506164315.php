@@ -94,7 +94,7 @@ class AuthController extends Controller
 
     // DECONNEXION
     public function logout(Request $request){
-        auth('sanctum')->user()->tokens()->delete();
+        auth('sanctum')->user()->currentAccessToken()->delete();
 
         return response()->json([
             'message'=>'Déconnecté avec succès !',
@@ -103,6 +103,6 @@ class AuthController extends Controller
 
     // UTILISATEUR CONNECTEE
     public function me(Request $request){
-        return response()->json(Auth::user());
+        dd(auth('sanctum')->user());
     }
 }

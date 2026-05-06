@@ -13,6 +13,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-/* Route::get('/test', function () {
+Route::get('/test', function () {
     return 'API working';
-}); */
+});

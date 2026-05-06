@@ -13,7 +13,7 @@ class AvisController extends Controller
 {
     //liste des avis d'un enseignant
     public function index($id_enseignant){
-        $enseignant = Enseignant::where('utilisateur_id',$id_enseignant)->first();
+        $enseignant = Enseignant::find($id_enseignant); 
 
         if (!$enseignant) {
             return response()->json([

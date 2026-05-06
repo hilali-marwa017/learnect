@@ -76,7 +76,7 @@ class ReservationController extends Controller
         // 5. Marquer le creneau indispo
         $creneau->update(['estDisponible'=>false]);
 
-        // 6. Creer le paiement simulee
+        // 6. Creer le paiement simule
         $comission = $montant * 0.10;
 
         Paiement::create([
@@ -119,7 +119,7 @@ class ReservationController extends Controller
         ]);
     }
 
-    public function destroy($id){
+    public function destroy( int $id){
         $reservation = Reservation::where('id_reservation', $id)->where('id_utilisateur', Auth::id())->first();
 
         if (!$reservation) {
@@ -128,7 +128,7 @@ class ReservationController extends Controller
             ],404);
         }
 
-        // liberer creneau
+        // libérer creneau
         Creneau::where('id_creneau', $reservation->id_creneau)->update(['estDisponible'=>true]);
 
         // annuler reservation

@@ -50,7 +50,7 @@ class CreneauController extends Controller
             'jour'=>'in:lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche',
             'heureDebut'=>'date_format:H:i',
             'heureFin'=>'date_format:H:i',
-            'estDisponible'=>'boolean',
+            'estDisponible' => 'boolean',
         ]);
 
         $creneau = Creneau::where('id_creneau', $id)->where('id_enseignant', Auth::id())->first();

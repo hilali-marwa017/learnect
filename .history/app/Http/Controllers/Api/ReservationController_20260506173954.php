@@ -119,7 +119,7 @@ class ReservationController extends Controller
         ]);
     }
 
-    public function destroy($id){
+    public function destroy( int $id){
         $reservation = Reservation::where('id_reservation', $id)->where('id_utilisateur', Auth::id())->first();
 
         if (!$reservation) {
@@ -128,7 +128,7 @@ class ReservationController extends Controller
             ],404);
         }
 
-        // liberer creneau
+        // libérer creneau
         Creneau::where('id_creneau', $reservation->id_creneau)->update(['estDisponible'=>true]);
 
         // annuler reservation
