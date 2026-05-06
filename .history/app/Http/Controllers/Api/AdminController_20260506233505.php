@@ -115,7 +115,9 @@ class AdminController extends Controller
     }
 
     public function paiements(){
-        $paiements = Paiement::with('reservation.etudiant')->orderBy('created_at','desc')->get();
-        return response()->json($paiements);
+        $paiements =  $paiements = Paiement::with('reservation.etudiant')
+                             ->orderBy('created_at', 'desc')
+                             ->get();
+
     }
 }

@@ -83,39 +83,5 @@ class AdminController extends Controller
         ]);
     }
 
-    public function refuserEnseignant(Request $request, Enseignant $enseignant){
-        // validation de la raison
-        $request->validate(['raison'=>'required|string|min:3|max:255']);
-
-        //mettre le statut user en attente
-        $enseignant->user->update(['statut'=>'en_attente']);
-
-        return response()->json([
-            'message'=>'Enseignant refusé !',
-            'raison'=>$request->raison
-        ]);
-    }
-
-    public function supprimerAvis(Avis $avis){
-        $avis->delete();
-
-        return response()->json([
-            'message'=>'Avis supprimé avec succès !'
-        ]);
-    }
-
-    public function demandes(){
-        $demandes = Demande::With('etudiant')->odrderBy('created_at','desc')->get();
-        return response()->json($demandes);
-    }
-
-    public function reservations(){
-        $reservations = Reservation::with('etudiant','creneau.enseignant.user','paiement')->orderBy('created_at','desc')->get();
-        return response()->json($reservations);
-    }
-
-    public function paiements(){
-        $paiements = Paiement::with('reservation.etudiant')->orderBy('created_at','desc')->get();
-        return response()->json($paiements);
-    }
+    public function refuserEnseignant(Request $request, )
 }

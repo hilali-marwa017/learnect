@@ -106,16 +106,12 @@ class AdminController extends Controller
 
     public function demandes(){
         $demandes = Demande::With('etudiant')->odrderBy('created_at','desc')->get();
+
         return response()->json($demandes);
     }
 
     public function reservations(){
         $reservations = Reservation::with('etudiant','creneau.enseignant.user','paiement')->orderBy('created_at','desc')->get();
         return response()->json($reservations);
-    }
-
-    public function paiements(){
-        $paiements = Paiement::with('reservation.etudiant')->orderBy('created_at','desc')->get();
-        return response()->json($paiements);
     }
 }
