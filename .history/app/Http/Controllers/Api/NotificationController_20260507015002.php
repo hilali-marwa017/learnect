@@ -21,7 +21,7 @@ class NotificationController extends Controller
     }
 
     public function markRead($id){
-        // chercher une notif spécifique de user connectee
+        // chercher une notig spécifique de user connectee
         $notif = Notification::where('id_notification',$id)->where('utilisateur_id',Auth::id())->first();
 
         if (!$notif) {
@@ -46,14 +46,12 @@ class NotificationController extends Controller
     }
 
     public function destroy(Notification $notification){
-        if ($notification->utilisateur_id != Auth::id()){ 
-            return response()->json([
-                'message'=>'Non autorisé !'
-            ],403);
-        }
-
-        $notification->delete();
-
-        return response()->json(['message'=>'Notification supprimée !']);
+    if ($notification->utilisateur_id != Auth::id()) {
+        return response()->json(['message'=>'Non autorisé !'],403);
     }
+
+    $notification->delete();
+
+    return response()->json(['message'=>'Notification supprimée !']);
+}
 }

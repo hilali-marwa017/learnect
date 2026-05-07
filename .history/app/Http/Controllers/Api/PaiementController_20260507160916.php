@@ -25,19 +25,19 @@ class PaiementController extends Controller
         return response()->json($paiement);
     }
 
-    // calculer le revenu d'enseignant connectee
+    // calculer le revenue 
     public function revenusEnseignant(){
         $enseignant = auth()->user()->enseignant;//recuperer l'enseignant liee au user connectee
 
         $creneaux = $enseignant->creneaux()->with('reservations.paiement')->get();
 
-        $total = 0;// total des revenus
-        $paiements =[];// liste des paiements 
+        $total = 0;
+        $paiements =[];
 
-        foreach ($creneaux as $creneau){// tous les cours de l'enseignant
-            foreach ($creneau->reservations as $reservation){//
-                if ($reservation->paiement && $reservation->paiement->statut === 'paye'){ 
-                    $total = $total + $reservation->paiement->montantEnseignant; // ajouter le montant au total
+        foreach ($creneaux as $creneau){
+            foreach ($creneau->reservations as $reservation){
+                if ($reservation->paiement && $reservation->paiement->statut === 'paye'){
+                    $total += $reservation->paiement->montantEnseignant;
                     $paiements[] = $reservation->paiement;
                 }
             }

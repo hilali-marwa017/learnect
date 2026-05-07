@@ -48,8 +48,7 @@ class NotificationController extends Controller
     public function destroy(Notification $notification){
         if ($notification->utilisateur_id != Auth::id()){ 
             return response()->json([
-                'message'=>'Non autorisé !'
-            ],403);
+                'message'=>'Non autorisé !'],403);
         }
 
         $notification->delete();

@@ -35,9 +35,9 @@ class PaiementController extends Controller
         $paiements =[];// liste des paiements 
 
         foreach ($creneaux as $creneau){// tous les cours de l'enseignant
-            foreach ($creneau->reservations as $reservation){//
+            foreach ($creneau->reservations as $reservation){
                 if ($reservation->paiement && $reservation->paiement->statut === 'paye'){ 
-                    $total = $total + $reservation->paiement->montantEnseignant; // ajouter le montant au total
+                    $total += $reservation->paiement->montantEnseignant;//table enseignant
                     $paiements[] = $reservation->paiement;
                 }
             }

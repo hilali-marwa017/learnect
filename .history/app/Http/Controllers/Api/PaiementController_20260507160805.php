@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PaiementController extends Controller
 {
-    // recuperer la liste des paiements d'un user connectee
+    // recuperer la liste des paiements
     public function index(){
         $paiements = Paiement::with('reservation.creneau.enseignant.user')->get()->where('reservation.id_utilisateur',Auth::id());
         return response()->json($paiements);
@@ -25,19 +25,19 @@ class PaiementController extends Controller
         return response()->json($paiement);
     }
 
-    // calculer le revenu d'enseignant connectee
+
     public function revenusEnseignant(){
-        $enseignant = auth()->user()->enseignant;//recuperer l'enseignant liee au user connectee
+        $enseignant = auth()->user()->enseignant;
 
         $creneaux = $enseignant->creneaux()->with('reservations.paiement')->get();
 
-        $total = 0;// total des revenus
-        $paiements =[];// liste des paiements 
+        $total = 0;
+        $paiements =[];
 
-        foreach ($creneaux as $creneau){// tous les cours de l'enseignant
-            foreach ($creneau->reservations as $reservation){//
-                if ($reservation->paiement && $reservation->paiement->statut === 'paye'){ 
-                    $total = $total + $reservation->paiement->montantEnseignant; // ajouter le montant au total
+        foreach ($creneaux as $creneau){
+            foreach ($creneau->reservations as $reservation){
+                if ($reservation->paiement && $reservation->paiement->statut === 'paye'){
+                    $total += $reservation->paiement->montantEnseignant;
                     $paiements[] = $reservation->paiement;
                 }
             }
