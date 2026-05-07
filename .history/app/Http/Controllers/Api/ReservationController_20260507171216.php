@@ -50,11 +50,11 @@ class ReservationController extends Controller
             $montant = 0;//1er cours gratuit
         }
         elseif($request->id_offre){
-            $offre = Offre::find($request->id_offre);//recuperer l'offre
-            $montant = $offre ? $offre->prix : $creneau->enseignant->tarifHeure;//calcule de montant
+            $offre = Offre::find($request->id_offre);
+            $montant = $offre ? $offre->prix : $creneau->enseignant->tarifHeure;
         }
         else{
-            $montant = $creneau->enseignant->tarifHeure;//user n'a choisit acune offre donc le prix de l'enseignant
+            $montant = $creneau->enseignant->tarifHeure;
         }
         // creation de la reservation
         $reservation = Reservation::create([
@@ -101,7 +101,6 @@ class ReservationController extends Controller
         }
 
         $reservation->update(['statut'=>'confirmee']);
-        //confirmer le paiement
         Paiement::where('id_reservation',$id)->update(['statut'=>'paye']);
         //recuperer le num de l'enseignant
         $telephone = $reservation->creneau->enseignant->user->telephone;
@@ -121,9 +120,9 @@ class ReservationController extends Controller
                 'message'=>'Réservation introuvable !'
             ],404);
         }
-        //liberer creneau
+
         Creneau::where('id_creneau',$reservation->id_creneau)->update(['estDisponible'=>true]);
-        //annuler reservation
+
         $reservation->update(['statut'=>'annulee']);
 
         return response()->json([

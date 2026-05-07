@@ -50,7 +50,7 @@ class ReservationController extends Controller
             $montant = 0;//1er cours gratuit
         }
         elseif($request->id_offre){
-            $offre = Offre::find($request->id_offre);//recuperer l'offre
+            $offre = Offre::find($request->id_offre);//r
             $montant = $offre ? $offre->prix : $creneau->enseignant->tarifHeure;//calcule de montant
         }
         else{

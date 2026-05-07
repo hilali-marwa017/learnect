@@ -29,7 +29,7 @@ class ReservationController extends Controller
             'date'=>'required|date|after:today',
             'id_offre'=>'nullable|exists:offres,id_offre',
         ]);
-        //recuperer le creneau dispo
+        //verifier si creneau est dispo
         $creneau = Creneau::where('id_creneau',$request->id_creneau) ->where('estDisponible',true)->first();
 
         if(!$creneau){
@@ -37,7 +37,7 @@ class ReservationController extends Controller
                 'message'=>'Créneau non disponible !'
             ],400);
         }
-        // ne peut pas reserver son propre cours
+        // empecher l'enseignant de reserver son propre cours
         if($creneau->id_enseignant == Auth::id()){
             return response()->json([
                 'message'=>'Vous ne pouvez pas réserver votre propre cours !'
@@ -50,11 +50,11 @@ class ReservationController extends Controller
             $montant = 0;//1er cours gratuit
         }
         elseif($request->id_offre){
-            $offre = Offre::find($request->id_offre);//recuperer l'offre
-            $montant = $offre ? $offre->prix : $creneau->enseignant->tarifHeure;//calcule de montant
+            $offre = Offre::find($request->id_offre);
+            $montant = $offre ? $offre->prix : $creneau->enseignant->tarifHeure;
         }
         else{
-            $montant = $creneau->enseignant->tarifHeure;//user n'a choisit acune offre donc le prix de l'enseignant
+            $montant = $creneau->enseignant->tarifHeure;
         }
         // creation de la reservation
         $reservation = Reservation::create([
@@ -65,11 +65,11 @@ class ReservationController extends Controller
             'id_creneau'=>$request->id_creneau,
             'id_offre'=>$request->id_offre,
         ]);
-        //creneau indispo apres reservation
+
         $creneau->update(['estDisponible'=>false]);
-        //calcul de comision 10%
+
         $comission = $montant * 0.10;
-        //creer un paiment
+
         Paiement::create([
             'montantTotal'=>$montant,
             'comission'=>$comission,
@@ -101,9 +101,8 @@ class ReservationController extends Controller
         }
 
         $reservation->update(['statut'=>'confirmee']);
-        //confirmer le paiement
         Paiement::where('id_reservation',$id)->update(['statut'=>'paye']);
-        //recuperer le num de l'enseignant
+
         $telephone = $reservation->creneau->enseignant->user->telephone;
 
         return response()->json([
@@ -112,7 +111,7 @@ class ReservationController extends Controller
             'whatsapp'=>$telephone
         ]);
     }
-    //annuler reservation
+
     public function destroy($id){
         $reservation = Reservation::where('id_reservation',$id)->where('id_utilisateur',Auth::id())->first();
 
@@ -121,9 +120,9 @@ class ReservationController extends Controller
                 'message'=>'Réservation introuvable !'
             ],404);
         }
-        //liberer creneau
+
         Creneau::where('id_creneau',$reservation->id_creneau)->update(['estDisponible'=>true]);
-        //annuler reservation
+
         $reservation->update(['statut'=>'annulee']);
 
         return response()->json([
