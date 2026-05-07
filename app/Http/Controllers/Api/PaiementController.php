@@ -10,9 +10,12 @@ class PaiementController extends Controller
 {
     // recuperer la liste des paiements d'un user connectee
     public function index(){
-        $paiements = Paiement::with('reservation.creneau.enseignant.user')->get()->where('reservation.id_utilisateur',Auth::id());
+        $paiements = Paiement::with('reservation.creneau.enseignant.user')->join('reservations','paiements.id_reservation','=','reservations.id_reservation')
+                ->where('reservations.id_utilisateur',Auth::id())
+                ->select('paiements.*')->get();
         return response()->json($paiements);
-    }
+}
+
 
     public function show($id){
         $paiement = Paiement::with('reservation')->find($id);
