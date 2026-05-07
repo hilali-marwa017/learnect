@@ -59,7 +59,8 @@ class AvisController extends Controller
         $noteMoyenne = Avis::where('id_enseignant',$request->id_enseignant)->avg('note');
 
         //maj la noteMoyenne dans la table enseignants
-        Enseignant::where('utilisateur_id',$request->id_enseignant)->update(['noteMoyenne'=>round($noteMoyenne, 2)]);
+        Enseignant::where('utilisateur_id', $request->id_enseignant)
+                  ->update(['noteMoyenne' => round($noteMoyenne, 2)]);
 
         return response()->json([
             'message'=>'Avis laissé avec succès !',

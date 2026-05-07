@@ -16,7 +16,7 @@ class MessageController extends Controller
     }
 
     public function index($id_reservation){
-        $reservation = Reservation::with('creneau')->find($id_reservation);
+        $reservation = Rservation::with('creneau')->find($id_reservation);
         if (!$reservation) {
             return response()->json([
                 'message'=>'Réservation introuvable !'
@@ -76,9 +76,9 @@ class MessageController extends Controller
         }       
 
         $message->delete();
-
+    
         return response()->json([
-            'message'=>'Message supprimé avec succès !'
+            'message' => 'Message supprimé avec succès !'
         ]);
 
 

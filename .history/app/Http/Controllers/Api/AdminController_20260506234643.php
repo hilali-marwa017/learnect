@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User; 
+use App\Models\User;
 use App\Models\Enseignant;
 use App\Models\Reservation;
 use App\Models\Avis;
@@ -69,10 +69,13 @@ class AdminController extends Controller
     public function enseignantsEnAttente(){
         $enseignants = Enseignant::with('user','documents')->where('estVerifie',false)->get();
         return response()->json($enseignants);
+
+
     }
 
     public function validerEnseignant(Enseignant $enseignant){
         $enseignant->update(['estVerifie'=>true]);
+        //recuperer le compte user liee a  enseignant pour modifier le statut dans user tables
         $enseignant->user->update(['statut'=>'actif']);
 
         return response()->json([
@@ -81,8 +84,10 @@ class AdminController extends Controller
     }
 
     public function refuserEnseignant(Request $request, Enseignant $enseignant){
+        // validation de la raison
         $request->validate(['raison'=>'required|string|min:3|max:255']);
 
+        //mettre le statut user en attente
         $enseignant->user->update(['statut'=>'en_attente']);
 
         return response()->json([
@@ -100,7 +105,7 @@ class AdminController extends Controller
     }
 
     public function demandes(){
-        $demandes = Demande::with('etudiant')->orderBy('created_at','desc')->get();
+        $demandes = Demande::with('etudiant')->odrderBy('created_at','desc')->get();
         return response()->json($demandes);
     }
 

@@ -16,7 +16,7 @@ class MessageController extends Controller
     }
 
     public function index($id_reservation){
-        $reservation = Reservation::with('creneau')->find($id_reservation);
+        $reservation = Rservation::with('creneau')->find($id_reservation);
         if (!$reservation) {
             return response()->json([
                 'message'=>'Réservation introuvable !'
@@ -47,40 +47,10 @@ class MessageController extends Controller
         ]);
 
         $reservation = Reservation::where('id_reservation',$request->id_reservation)->where('statut','confirmee')->first();
-        if (!$reservation){
+        if (!$reservation) {
             return response()->json([
                 'message'=>'Messages disponibles après confirmation seulement !'
             ],400);
-        }
-
-        $message = Message::create([
-            'contenu'=>$request->contenu,
-            'id_expediteur'=>Auth::id(),//sender
-            'id_destinataire'=>$request->id_destinataire,//receiver
-            'id_reservation'=>$request->id_reservation,
-        ]);
-
-        return response()->json([
-            'message'=>'Message envoyé avec succès !',
-            'data'=>$message->load('expediteur'),//charger les infos de l'expediteur liees au msg 
-        ],201);
-
-    }
-
-    //supprimer un msg
-    public function destroy(Message $message){
-        if($message->id_expediteur != Auth::id()){
-            return response()->json([
-                'message' => 'Non autorisé !'
-            ],403);
-        }       
-
-        $message->delete();
-
-        return response()->json([
-            'message'=>'Message supprimé avec succès !'
-        ]);
-
 
     }
 }
