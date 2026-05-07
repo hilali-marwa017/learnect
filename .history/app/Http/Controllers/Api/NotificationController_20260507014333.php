@@ -41,7 +41,6 @@ class NotificationController extends Controller
         Notification::where('utilisateur_id', Auth::id())->where('est_lue',false)->update(['est_lue'=>true]);
 
         return response()->json([
-            'message'=>'Toutes les notifications marquées comme lues !'
-        ]);
+            'message'=>'Toutes les notifications marquées comme lues !']);
     }
 }

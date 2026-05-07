@@ -24,24 +24,24 @@ class NotificationController extends Controller
         // chercher une notig spécifique de user connectee
         $notif = Notification::where('id_notification',$id)->where('utilisateur_id',Auth::id())->first();
 
+        // si notification introuvable ou non autorisée
         if (!$notif) {
-            return response()->json([
-                'message'=>'Notification introuvable !'
-                ],404);
+            return response()->json(['message' => 'Notification introuvable !'], 404);
         }
 
-        // marquer la notif comme lue
+        // marquer la notification comme lue
         $notif->update(['est_lue' => true]);
 
-        return response()->json(['message'=>'Notification marquée comme lue !']);
+        return response()->json(['message' => 'Notification marquée comme lue !']);
     }
 
-    public function markAllRead(){
-        // marquer toutes les notif non lues comme lues d'un user connectee
-        Notification::where('utilisateur_id', Auth::id())->where('est_lue',false)->update(['est_lue'=>true]);
+    public function markAllRead()
+    {
+        // marquer toutes les notifications non lues comme lues
+        Notification::where('utilisateur_id', Auth::id())
+            ->where('est_lue', false)
+            ->update(['est_lue' => true]);
 
-        return response()->json([
-            'message'=>'Toutes les notifications marquées comme lues !'
-        ]);
+        return response()->json(['message' => 'Toutes les notifications marquées comme lues !']);
     }
 }

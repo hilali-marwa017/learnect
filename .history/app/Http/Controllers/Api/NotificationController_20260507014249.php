@@ -37,11 +37,11 @@ class NotificationController extends Controller
     }
 
     public function markAllRead(){
-        // marquer toutes les notif non lues comme lues d'un user connectee
-        Notification::where('utilisateur_id', Auth::id())->where('est_lue',false)->update(['est_lue'=>true]);
+        // marquer toutes les notif non lues comme lues
+        Notification::where('utilisateur_id', Auth::id())
+            ->where('est_lue', false)
+            ->update(['est_lue' => true]);
 
-        return response()->json([
-            'message'=>'Toutes les notifications marquées comme lues !'
-        ]);
+        return response()->json(['message' => 'Toutes les notifications marquées comme lues !']);
     }
 }
