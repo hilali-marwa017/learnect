@@ -29,7 +29,7 @@ class ReservationController extends Controller
             'id_creneau'=>'required|exists:creneaux,id_creneau',
             'date'=>'required|date|after:today',
             'id_offre'=>'nullable|exists:offres,id_offre',
-            'methode'=>'required|in:simulation,cash', 
+            'methode'=>'required|in:simulation,cash', // ✅ nouveau
         ]);
 
         //recuperer le creneau dispo

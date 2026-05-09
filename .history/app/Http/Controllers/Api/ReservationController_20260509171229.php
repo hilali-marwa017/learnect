@@ -29,7 +29,7 @@ class ReservationController extends Controller
             'id_creneau'=>'required|exists:creneaux,id_creneau',
             'date'=>'required|date|after:today',
             'id_offre'=>'nullable|exists:offres,id_offre',
-            'methode'=>'required|in:simulation,cash', 
+            'methode'=>'required|in:simulation,cash', // ✅ nouveau
         ]);
 
         //recuperer le creneau dispo
@@ -83,7 +83,7 @@ class ReservationController extends Controller
             'montantTotal'=>$montant,
             'comission'=>$comission,
             'montantEnseignant'=>$montant-$comission,
-            'methode'=>$request->methode, // simulation paypal ou cash
+            'methode'=>$request->methode, // ✅ simulation ou cash
             'statut'=>'en_attente',
             'id_reservation'=>$reservation->id_reservation,
         ]);
@@ -91,7 +91,7 @@ class ReservationController extends Controller
         return response()->json([
             'message'=>'Réservation créée avec succès !',
             'reservation'=>$reservation,
-            'methode'=>$request->methode, 
+            'methode'=>$request->methode, // ✅ nouveau
         ],201);
     }
 
@@ -118,7 +118,7 @@ class ReservationController extends Controller
         //recuperer le num de l'enseignant
         $telephone = $reservation->creneau->enseignant->user->telephone;
 
-        // recuperer la methode de paiement
+        // ✅ recuperer la methode de paiement
         $paiement = Paiement::where('id_reservation',$id)->first();
 
         // message selon methode

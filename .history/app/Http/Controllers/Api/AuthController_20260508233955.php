@@ -46,7 +46,7 @@ class AuthController extends Controller
         ]);
 
         // creer profil etudiant
-        if ($request->role === 'etudiant'){
+        if ($request->role === 'etudiant') {
 
             Etudiant::create([
                 'utilisateur_id'=>$user->utilisateur_id,
@@ -100,7 +100,7 @@ class AuthController extends Controller
 
             $user = Auth::user();
 
-            // bloquee
+            // blogquee
             if ($user->statut === 'bloque') {
                 Auth::logout();
                 return response()->json([
@@ -113,29 +113,31 @@ class AuthController extends Controller
                 Auth::logout();
                 return response()->json([
                     'message'=>"Votre compte est en attente de validation par l'admin !"
-                ],403);
+                ], 403);
             }
 
             $token = $user->createToken('learnect-token')->plainTextToken;
 
             return response()->json([
-                'message'=>'Connecté avec succès !',
-                'user'=>$user,
-                'token'=>$token,
+                'message' => 'Connecté avec succès !',
+                'user'    => $user,
+                'token'   => $token,
             ]);
         }
 
         return response()->json([
-            'message'=>'Email ou mot de passe incorrect'
-        ],401);
+            'message' => 'Email ou mot de passe incorrect'
+        ], 401);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         auth('sanctum')->user()->tokens()->delete();
-        return response()->json(['message'=>'Déconnecté avec succès !']);
+        return response()->json(['message' => 'Déconnecté avec succès !']);
     }
 
-    public function me(Request $request){
+    public function me(Request $request)
+    {
         return response()->json(Auth::user());
     }
 }

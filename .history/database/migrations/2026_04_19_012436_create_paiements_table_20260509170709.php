@@ -12,7 +12,7 @@ return new class extends Migration
             $table->decimal('montantTotal', 8, 2);
             $table->decimal('comission', 8, 2);
             $table->decimal('montantEnseignant', 8, 2);
-            $table->enum('methode',['simulation','cash'])->default('simulation');
+            $table->enum('methode',['simulation','simulation'])->default('simulation');
             $table->enum('statut',['en_attente','paye','rembourse'])->default('en_attente');
             $table->foreignId('id_reservation')->constrained('reservations', 'id_reservation')->onDelete('cascade');
             $table->timestamps();

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Creneau extends Model
 {
     use HasFactory;
-    protected $table = 'creneaux';
+    p
     protected $primaryKey = 'id_creneau';
     protected $fillable = ['jour','heureDebut','heureFin','estDisponible','id_enseignant'];
 

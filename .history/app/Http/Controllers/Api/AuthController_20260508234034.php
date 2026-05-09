@@ -46,7 +46,7 @@ class AuthController extends Controller
         ]);
 
         // creer profil etudiant
-        if ($request->role === 'etudiant'){
+        if ($request->role === 'etudiant') {
 
             Etudiant::create([
                 'utilisateur_id'=>$user->utilisateur_id,
@@ -100,7 +100,7 @@ class AuthController extends Controller
 
             $user = Auth::user();
 
-            // bloquee
+            // blogquee
             if ($user->statut === 'bloque') {
                 Auth::logout();
                 return response()->json([
@@ -132,10 +132,11 @@ class AuthController extends Controller
 
     public function logout(Request $request){
         auth('sanctum')->user()->tokens()->delete();
-        return response()->json(['message'=>'Déconnecté avec succès !']);
+        return response()->json(['message' => 'Déconnecté avec succès !']);
     }
 
-    public function me(Request $request){
+    public function me(Request $request)
+    {
         return response()->json(Auth::user());
     }
 }

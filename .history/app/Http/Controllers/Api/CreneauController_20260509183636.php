@@ -34,8 +34,8 @@ class CreneauController extends Controller
             'jour'=>$request->jour,
             'heureDebut'=>$request->heureDebut,
             'heureFin'=>$request->heureFin,
-            'estDisponible'=>true,
-            'id_enseignant'=>Auth::id(),
+            'estDisponible'=> true,
+            'id_enseignant'=> Auth::id(),
         ]);
 
         return response()->json([

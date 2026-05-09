@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         // validation 
         $request->validate([
             'nom'=>'required|string|max:255|min:3',
@@ -46,96 +47,102 @@ class AuthController extends Controller
         ]);
 
         // creer profil etudiant
-        if ($request->role === 'etudiant'){
+        if ($request->role === 'etudiant') {
 
             Etudiant::create([
                 'utilisateur_id'=>$user->utilisateur_id,
             ]);
 
-        // creer profil enseignant + docs
+        // creer profil ENSEIGNANT + DOCUMENTS
         } else {
 
-            // CIN recto — image
-            $fileRecto = $request->file('cin_recto');
-            $nameRecto ='cin_recto_' . $user->utilisateur_id . '_' . time(). '.' . $fileRecto->getClientOriginalExtension();
-            $pathRecto = $fileRecto->storeAs('documents/cin', $nameRecto, 'public');
+            // CIN RECTO — image
+            $fileRecto  = $request->file('cin_recto');
+            $nameRecto  = 'cin_recto_' . $user->utilisateur_id . '_' . time()
+                          . '.' . $fileRecto->getClientOriginalExtension();
+            $pathRecto  = $fileRecto->storeAs('documents/cin', $nameRecto, 'public');
 
-            // CIN verso — image
-            $fileVerso = $request->file('cin_verso');
-            $nameVerso ='cin_verso_' . $user->utilisateur_id . '_' . time(). '.' . $fileVerso->getClientOriginalExtension();
-            $pathVerso = $fileVerso->storeAs('documents/cin', $nameVerso, 'public');
+            // CIN VERSO — image
+            $fileVerso  = $request->file('cin_verso');
+            $nameVerso  = 'cin_verso_' . $user->utilisateur_id . '_' . time()
+                          . '.' . $fileVerso->getClientOriginalExtension();
+            $pathVerso  = $fileVerso->storeAs('documents/cin', $nameVerso, 'public');
 
-            // diplome — pdf
+            // DIPLOME — pdf
             $fileDiplome = $request->file('diplome');
-            $nameDiplome = 'diplome_' . $user->utilisateur_id . '_' . time(). '.' . $fileDiplome->getClientOriginalExtension();
+            $nameDiplome = 'diplome_' . $user->utilisateur_id . '_' . time()
+                           . '.' . $fileDiplome->getClientOriginalExtension();
             $pathDiplome = $fileDiplome->storeAs('documents/diplome', $nameDiplome, 'public');
 
             Enseignant::create([
-                'utilisateur_id'=>$user->utilisateur_id,
-                'cin_recto'=>$pathRecto,
-                'cin_verso'=>$pathVerso,
-                'diplome'=>$pathDiplome,
-                'statut_annonce'=>'brouillon',
+                'utilisateur_id' => $user->utilisateur_id,
+                'cin_recto'      => $pathRecto,
+                'cin_verso'      => $pathVerso,
+                'diplome'        => $pathDiplome,
+                'statut_annonce' => 'brouillon',
             ]);
         }
 
-        // login auto
+        // LOGIN AUTO
         Auth::login($user);
         $token = $user->createToken('learnect-token')->plainTextToken;
 
         return response()->json([
-            'message'=>'Compte créé avec succès !',
-            'user'=>$user,
-            'token'=>$token,
-        ],201);
+            'message' => 'Compte créé avec succès !',
+            'user'    => $user,
+            'token'   => $token,
+        ], 201);
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $request->validate([
-            'email'=>'required|email',
-            'password'=>'required',
+            'email'    => 'required|email',
+            'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email','password'))) {
+        if (Auth::attempt($request->only('email', 'password'))) {
 
             $user = Auth::user();
 
-            // bloquee
+            // BLOQUE
             if ($user->statut === 'bloque') {
                 Auth::logout();
                 return response()->json([
-                    'message'=>'Votre compte a été bloqué !'
-                ],403);
+                    'message' => 'Votre compte a été bloqué !'
+                ], 403);
             }
 
-            // enseignant en attente
+            // ENSEIGNANT EN ATTENTE
             if ($user->role === 'enseignant' && $user->statut === 'en_attente') {
                 Auth::logout();
                 return response()->json([
-                    'message'=>"Votre compte est en attente de validation par l'admin !"
-                ],403);
+                    'message' => "Votre compte est en attente de validation par l'admin !"
+                ], 403);
             }
 
             $token = $user->createToken('learnect-token')->plainTextToken;
 
             return response()->json([
-                'message'=>'Connecté avec succès !',
-                'user'=>$user,
-                'token'=>$token,
+                'message' => 'Connecté avec succès !',
+                'user'    => $user,
+                'token'   => $token,
             ]);
         }
 
         return response()->json([
-            'message'=>'Email ou mot de passe incorrect'
-        ],401);
+            'message' => 'Email ou mot de passe incorrect'
+        ], 401);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         auth('sanctum')->user()->tokens()->delete();
-        return response()->json(['message'=>'Déconnecté avec succès !']);
+        return response()->json(['message' => 'Déconnecté avec succès !']);
     }
 
-    public function me(Request $request){
+    public function me(Request $request)
+    {
         return response()->json(Auth::user());
     }
 }

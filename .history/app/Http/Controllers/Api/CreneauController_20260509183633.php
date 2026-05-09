@@ -32,10 +32,10 @@ class CreneauController extends Controller
 
         $creneau = Creneau::create([
             'jour'=>$request->jour,
-            'heureDebut'=>$request->heureDebut,
-            'heureFin'=>$request->heureFin,
-            'estDisponible'=>true,
-            'id_enseignant'=>Auth::id(),
+            'heureDebut'=> $request->heureDebut,
+            'heureFin'=> $request->heureFin,
+            'estDisponible'=> true,
+            'id_enseignant'=> Auth::id(),
         ]);
 
         return response()->json([
