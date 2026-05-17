@@ -167,8 +167,7 @@ class ReservationController extends Controller
 
         if(!$reservation){
             return response()->json([
-                'message'=>'Réservation introuvable ou non confirmée !'
-            ],404);
+                'message'=>'Réservation introuvable ou non confirmée !'],404);
         }
 
         $reservation->update(['statut'=>'terminee']);

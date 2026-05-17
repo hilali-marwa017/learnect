@@ -166,9 +166,7 @@ class ReservationController extends Controller
         $reservation = Reservation::where('id_reservation',$id)->where('id_utilisateur',Auth::id())->where('statut','confirmee')->first();
 
         if(!$reservation){
-            return response()->json([
-                'message'=>'Réservation introuvable ou non confirmée !'
-            ],404);
+            return response()->json(['message'=>'Réservation introuvable ou non confirmée !'],404);
         }
 
         $reservation->update(['statut'=>'terminee']);
