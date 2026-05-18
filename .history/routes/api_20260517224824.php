@@ -166,16 +166,16 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::put('/enseignants/{enseignant}/valider',[AdminController::class,'validerEnseignant']);
         Route::put('/enseignants/{enseignant}/refuser',[AdminController::class,'refuserEnseignant']);
 
-        // Contenu
+        //contenu 
         Route::delete('/avis/{avis}',[AdminController::class,'supprimerAvis']);
         Route::get('/demandes',[AdminController::class,'demandes']);
         Route::get('/reservations',[AdminController::class,'reservations']);
 
-        // ✅ stats AVANT paiements pour eviter conflit
+        //stats , paiement
         Route::get('/paiements/stats',[PaiementController::class,'adminIndex']);
         Route::get('/paiements',[AdminController::class,'paiements']);
 
-        // ✅ Signalements admin
+        //signalements admin
         Route::get('/signalements',[SignalementController::class,'index']);
         Route::put('/signalements/{signalement}/traiter',[SignalementController::class,'traiter']);
         Route::delete('/signalements/{signalement}',[SignalementController::class,'destroy']);

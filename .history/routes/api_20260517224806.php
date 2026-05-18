@@ -175,7 +175,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/paiements/stats',[PaiementController::class,'adminIndex']);
         Route::get('/paiements',[AdminController::class,'paiements']);
 
-        // ✅ Signalements admin
+        //signalements admin
         Route::get('/signalements',[SignalementController::class,'index']);
         Route::put('/signalements/{signalement}/traiter',[SignalementController::class,'traiter']);
         Route::delete('/signalements/{signalement}',[SignalementController::class,'destroy']);

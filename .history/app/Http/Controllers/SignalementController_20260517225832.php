@@ -13,7 +13,7 @@ class SignalementController extends Controller
     public function store(Request $request){
         $request->validate([
             'motif'=>'required|string|min:10',
-            'id_avis'=>'required|exists:avis,id_avis'
+            'id_avis'=>'required|exists:avis,id_avis',
         ]);
 
         $avis = Avis::find($request->id_avis);
@@ -64,16 +64,15 @@ class SignalementController extends Controller
     //traitement d'avis par admin
     public function traiter(Signalement $signalement){
         $signalement->update(['statut'=>'traite']);
-        return response()->json([
-            'message'=>'Signalement traité'
-        ]);
+        return response()->json(['message'=>'Signalement traité !']);
     }
 
-
+    /*
+    * destroy() — admin supprime le signalement
+    * si il decide que l'avis est correct
+    */
     public function destroy(Signalement $signalement){
         $signalement->delete();
-        return response()->json([
-            'message'=>'Signalement supprimé !'
-        ]);
+        return response()->json(['message'=>'Signalement supprimé !']);
     }
 }

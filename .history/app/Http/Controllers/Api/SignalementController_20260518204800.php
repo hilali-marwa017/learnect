@@ -13,7 +13,7 @@ class SignalementController extends Controller
     public function store(Request $request){
         $request->validate([
             'motif'=>'required|string|min:10',
-            'id_avis'=>'required|exists:avis,id_avis'
+            'id_avis'=>'required|exists:avis,id_avis',
         ]);
 
         $avis = Avis::find($request->id_avis);
