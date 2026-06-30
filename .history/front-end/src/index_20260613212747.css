@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --canvas-light: #f8f9fc;
+  --surface-card-light: #ffffff;
+  --surface-elevated-light: #f1f3f5;
+  --surface-deep-light: #edf2f7;
+  --hairline-light: rgba(0, 0, 0, 0.06);
+  --hairline-strong-light: rgba(0, 0, 0, 0.12);
+  --ink-light: #07090d;
+  --charcoal-light: #4a5568;
+  --mute-light: #718096;
+  --stone-light: #a0aec0;
+
+  --canvas-dark: #000000;
+  --surface-card-dark: #0a0a0c;
+  --surface-elevated-dark: #101012;
+  --surface-deep-dark: #06060a;
+  --hairline-dark: rgba(255, 255, 255, 0.06);
+  --hairline-strong-dark: rgba(255, 255, 255, 0.14);
+  --ink-dark: #fcfdff;
+  --charcoal-dark: rgba(252, 253, 255, 0.7);
+  --mute-dark: #a1a4a5;
+  --stone-dark: #464a4d;
+
+  --accent-orange: #e04f00;
+  --accent-orange-glow: rgba(224, 79, 0, 0.06);
+  --accent-yellow: #b45309;
+  --accent-blue: #1c64f2;
+  --accent-blue-glow: rgba(28, 100, 242, 0.05);
+  --accent-green: #047857;
+  --accent-green-glow: rgba(4, 120, 87, 0.08);
+  --accent-red: #da1f1f;
+  --accent-red-glow: rgba(218, 31, 31, 0.06);
+}
+
+body {
+  font-family: "Hanken Grotesk", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-bounce {
+  animation: bounce 0.6s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--hairline-light);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-orange);
+  border-radius: 10px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--hairline-dark);
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-orange);
+  color: white;
+}

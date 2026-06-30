@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css');
+
+:root {
+  /* Couleur principale : bleu éducatif professionnel */
+  --couleur-principale: #2563EB;
+  --couleur-principale-hover: #1D4ED8;
+  --couleur-principale-claire: #EFF6FF;
+  --couleur-principale-bordure: #BFDBFE;
+
+  /* Couleurs sémantiques */
+  --couleur-succes: #059669;
+  --couleur-danger: #DC2626;
+  --couleur-avertissement: #D97706;
+
+  /* Couleurs de fond */
+  --fond-page: #F8FAFC;
+  --fond-carte: #FFFFFF;
+  --fond-secondaire: #F1F5F9;
+
+  /* Texte */
+  --texte-principal: #0F172A;
+  --texte-secondaire: #475569;
+  --texte-discret: #94A3B8;
+
+  /* Bordures */
+  --bordure: #E2E8F0;
+  --bordure-forte: #CBD5E1;
+
+  /* Typographie */
+  --police-titre: 'Space Grotesk', system-ui, sans-serif;
+  --police-corps: 'Inter', system-ui, sans-serif;
+
+  /* Ombres */
+  --ombre-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --ombre-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --ombre-lg: 0 12px 32px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --ombre-bleue: 0 4px 16px rgba(37, 99, 235, 0.25);
+}
+
+/* ─── RESET & BASE ─── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--police-corps);
+  background-color: var(--fond-page);
+  color: var(--texte-principal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--police-titre);
+  font-weight: 700;
+  color: var(--texte-principal);
+  line-height: 1.25;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ─── OVERRIDE BOOTSTRAP COULEUR PRINCIPALE ─── */
+.btn-primary {
+  background-color: var(--couleur-principale) !important;
+  border-color: var(--couleur-principale) !important;
+  color: #fff !important;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: none !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--couleur-principale-hover) !important;
+  border-color: var(--couleur-principale-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--ombre-bleue) !important;
+}
+.btn-primary:active {
+  transform: translateY(0) !important;
+}
+
+.btn-outline-primary {
+  color: var(--couleur-principale) !important;
+  border-color: var(--couleur-principale) !important;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.btn-outline-primary:hover {
+  background-color: var(--couleur-principale) !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: var(--ombre-bleue) !important;
+}
+
+.text-primary { color: var(--couleur-principale) !important; }
+.bg-primary { background-color: var(--couleur-principale) !important; }
+.border-primary { border-color: var(--couleur-principale) !important; }
+.btn-link { color: var(--couleur-principale) !important; }
+
+/* ─── FORMULAIRES ─── */
+.form-control, .form-select {
+  padding: 11px 14px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--bordure);
+  background-color: #fff;
+  color: var(--texte-principal);
+  font-family: var(--police-corps);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--couleur-principale);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  outline: none;
+}
+.form-control::placeholder { color: var(--texte-discret); }
+
+.form-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--texte-secondaire);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* ─── CARDS ─── */
+.card {
+  border: 1px solid var(--bordure) !important;
+  border-radius: 14px !important;
+  background-color: var(--fond-carte);
+  box-shadow: var(--ombre-sm) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--ombre-lg) !important;
+}
+
+/* ─── NAVBAR ─── */
+.navbar-learnect {
+  background: #fff;
+  border-bottom: 1px solid var(--bordure);
+  box-shadow: var(--ombre-sm);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  padding: 10px 0;
+}
+
+/* ─── HERO ─── */
+.hero-bg {
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 40%, #EDE9FE 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ─── BADGES ─── */
+.badge {
+  font-family: var(--police-corps);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.badge-section {
+  background-color: var(--couleur-principale-claire);
+  color: var(--couleur-principale);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--couleur-principale-bordure);
+}
+
+/* ─── ALERTS ─── */
+.alert {
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+.alert-danger {
+  background-color: #FEF2F2;
+  border-color: #FECACA;
+  color: #991B1B;
+}
+.alert-success {
+  background-color: #F0FDF4;
+  border-color: #BBF7D0;
+  color: #14532D;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--fond-secondaire); }
+::-webkit-scrollbar-thumb { background: var(--bordure-forte); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--texte-discret); }
+
+/* ─── UTILITAIRES ─── */
+.curseur-pointer { cursor: pointer; }
+.transition-douce { transition: all 0.2s ease; }
+
+.separateur {
+  width: 1px;
+  height: 28px;
+  background-color: var(--bordure);
+}
+
+/* ─── PAGE AUTH (Login / Register) ─── */
+.page-auth {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #EDE9FE 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+.carte-auth {
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid var(--bordure);
+  box-shadow: var(--ombre-lg);
+  padding: 40px;
+}
+.carte-auth .logo-auth {
+  width: 56px; height: 56px;
+  background: var(--couleur-principale);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  color: white;
+  font-size: 26px;
+}

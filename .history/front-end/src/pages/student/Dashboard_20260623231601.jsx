@@ -1,0 +1,188 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import api from '../../api/axios';
+import { Calendar, DollarSign, BookOpen, Clock, Settings, LogOut, Check, X, ShieldAlert, Star } from 'lucide-react';
+
+export function TeacherNavigationActive({ activeTab }) {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const links = [
+    { label: 'Disponibilités', path: '/teacher/availability', icon: Calendar, id: 'availability' },
+    { label: 'Mes Revenus', path: '/teacher/earnings', icon: DollarSign, id: 'earnings' },
+    { label: 'Modifier Profil', path: '/teacher/profile', icon: Settings, id: 'profile' },
+  ];
+
+  return (
+    <div style={{ background: '#1a1a1c', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '1rem', width: '220px', flexShrink: 0 }}>
+      <div style={{ fontSize: '0.6rem', letterSpacing: '0.12em', color: '#6b7280', fontWeight: 700, fontFamily: 'monospace', padding: '0 0.75rem 0.75rem', textTransform: 'uppercase' }}>
+        Menu Enseignant
+      </div>
+      <nav style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+        {links.map((link) => {
+          const Icon = link.icon;
+          const isActive = activeTab === link.id;
+          return (
+            <Link
+              key={link.id}
+              to={link.path}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '10px',
+                padding: '10px 12px', borderRadius: '10px',
+                fontSize: '0.82rem', fontWeight: isActive ? 700 : 500,
+                textDecoration: 'none', transition: 'all 0.15s',
+                background: isActive ? '#e04f00' : 'transparent',
+                color: isActive ? '#ffffff' : '#d1d5db',
+              }}
+            >
+              <Icon size={16} style={{ flexShrink: 0 }} />
+              <span>{link.label}</span>
+            </Link>
+          );
+        })}
+        <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', margin: '8px 0' }} />
+        <button
+          onClick={() => { logout(); navigate('/'); }}
+          style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px', fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
+        >
+          <LogOut size={16} style={{ flexShrink: 0 }} />
+          <span>Quitter la session</span>
+        </button>
+      </nav>
+    </div>
+  );
+}
+
+export default function TeacherDashboard() {
+  const { user } = useAuth();
+  const [stats, setStats] = useState(null);
+  const [reservations, setReservations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const dashRes = await api.get('/enseignant/dashboard');
+        setStats(dashRes.data.stats);
+        const resRes = await api.get('/enseignant/reservations');
+        const all = [];
+        resRes.data.forEach(creneau => {
+          (creneau.reservations || []).forEach(r => all.push({ ...r, creneau }));
+        });
+        setReservations(all);
+      } catch (e) { console.error(e); }
+      finally { setLoading(false); }
+    }
+    fetchData();
+  }, []);
+
+  async function handleAction(id, action) {
+    try {
+      if (action === 'confirmer') await api.post(`/reservations/${id}/confirmer-paiement`);
+      else await api.delete(`/reservations/${id}`);
+      setReservations(prev => prev.map(r => r.id_reservation === id ? { ...r, statut: action === 'confirmer' ? 'confirmee' : 'annulee' } : r));
+    } catch (e) { alert(e.response?.data?.message || 'Erreur.'); }
+  }
+
+  const pending = reservations.filter(r => r.statut === 'en_attente');
+
+  const metricCard = (icon, iconBg, iconColor, label, value) => (
+    <div style={{ background: '#1a1a1c', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
+      <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+        {icon(iconColor)}
+      </div>
+      <div>
+        <div style={{ fontSize: '0.6rem', color: '#6b7280', fontWeight: 700, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '4px' }}>{label}</div>
+        <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#ffffff' }}>{loading ? '...' : value}</div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#0a0a0c', paddingTop: '2rem', paddingBottom: '4rem' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+
+        {/* Bannière */}
+        <div style={{ background: '#1a1a1c', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '24px', padding: '2rem', position: 'relative', overflow: 'hidden', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(224,79,0,0.12) 0%, transparent 60%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ fontSize: '0.65rem', color: '#e04f00', fontWeight: 700, fontFamily: 'monospace', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>LEARNECT PROF PLATFORM</div>
+            <h1 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#ffffff', margin: '0 0 0.4rem', letterSpacing: '-0.02em' }}>Espace Professeur : {user?.prenom} {user?.nom}</h1>
+            <p style={{ fontSize: '0.8rem', color: '#9ca3af', margin: 0 }}>Administrez vos demandes d'heures de soutien scolaire et validez vos cours à domicile ou à distance.</p>
+          </div>
+          <div style={{ position: 'relative', zIndex: 1, background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)', borderRadius: '999px', padding: '6px 16px', fontSize: '0.7rem', fontWeight: 700, color: '#4ade80', fontFamily: 'monospace', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
+            ● STATUS : COMPTE VÉRIFIÉ
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <TeacherNavigationActive activeTab="dashboard" />
+
+          <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+
+            {/* Métriques */}
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              {metricCard(c => <DollarSign size={20} color={c} />, 'rgba(34,197,94,0.12)', '#4ade80', 'Offres en attente', stats?.offres_en_attente ?? 0)}
+              {metricCard(c => <Clock size={20} color={c} />, 'rgba(59,130,246,0.12)', '#60a5fa', 'Créneaux dispos', `${stats?.creneaux_dispos ?? 0} créneaux`)}
+              {metricCard(c => <Star size={20} color={c} fill={c} />, 'rgba(251,191,36,0.12)', '#fbbf24', 'Note du profil', `${stats?.note_moyenne ?? 0} / 5`)}
+            </div>
+
+            {/* Réservations en attente */}
+            <div style={{ background: '#1a1a1c', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '1.5rem' }}>
+              <h3 style={{ fontSize: '0.7rem', fontWeight: 700, color: '#ffffff', fontFamily: 'monospace', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 1.25rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                Demandes de réservation en attente d'approbation
+              </h3>
+
+              {loading ? (
+                <div style={{ textAlign: 'center', padding: '2.5rem', color: '#6b7280', fontSize: '0.8rem', fontFamily: 'monospace' }}>Chargement...</div>
+              ) : pending.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+                  {pending.map((r, i) => (
+                    <div key={r.id_reservation} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', padding: '1rem', borderRadius: '12px', flexWrap: 'wrap', borderBottom: i < pending.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#60a5fa', background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: '6px', padding: '2px 8px', fontFamily: 'monospace', textTransform: 'uppercase', width: 'fit-content' }}>
+                          {r.creneau?.jour} — {r.creneau?.heureDebut?.slice(0,5)} à {r.creneau?.heureFin?.slice(0,5)}
+                        </span>
+                        <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#ffffff' }}>{r.etudiant?.prenom} {r.etudiant?.nom}</div>
+                        <div style={{ fontSize: '0.75rem', color: '#6b7280', fontFamily: 'monospace' }}>
+                          Le {r.date} — {r.montant} DH
+                          {r.montant === 0 && <span style={{ color: '#4ade80', fontWeight: 700, marginLeft: '8px' }}>1er cours offert</span>}
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+                        <button onClick={() => handleAction(r.id_reservation, 'confirmer')} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 14px', borderRadius: '10px', border: '1px solid rgba(34,197,94,0.25)', background: 'rgba(34,197,94,0.08)', color: '#4ade80', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}>
+                          <Check size={14} /><span>Approuver</span>
+                        </button>
+                        <button onClick={() => handleAction(r.id_reservation, 'annuler')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', borderRadius: '10px', border: '1px solid rgba(239,68,68,0.25)', background: 'rgba(239,68,68,0.08)', color: '#f87171', cursor: 'pointer' }}>
+                          <X size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', padding: '2.5rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px' }}>
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(224,79,0,0.1)', border: '1px solid rgba(224,79,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Clock size={22} color="#e04f00" />
+                  </div>
+                  <p style={{ fontSize: '0.8rem', color: '#6b7280', fontWeight: 600, margin: 0 }}>Aucun créneau de soutien scolaire réservé actuellement.</p>
+                </div>
+              )}
+            </div>
+
+            {/* Consigne */}
+            <div style={{ background: '#1a1a1c', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '1.25rem 1.5rem', display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+              <ShieldAlert size={18} color="#e04f00" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#ffffff', marginBottom: '4px' }}>Consigne d'assiduité importante concernant la première heure de cours</div>
+                <p style={{ fontSize: '0.75rem', color: '#9ca3af', margin: 0, lineHeight: 1.6 }}>Le premier entretien avec l'élève est toujours offert sur Learnect. Déterminez ensemble ses objectifs, évaluez ses points faibles et mettez en place un programme sur-mesure pour stimuler sa réussite.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

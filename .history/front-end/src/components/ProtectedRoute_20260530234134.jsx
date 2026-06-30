@@ -1,0 +1,25 @@
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
+function ProtectedRoute({ children, role }) {
+  const { isAuthenticated, user } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (role && user?.role !== role) {
+    // Si l'utilisateur n'a pas le bon rôle, rediriger vers son dashboard
+    if (user?.role === 'admin') {
+      return <Navigate to="/admin/dashboard" replace />;
+    }
+    if (user?.role === 'enseignant') {
+      return <Navigate to="/enseignant/dashboard" replace />;
+    }
+    return <Navigate to="/etudiant/dashboard" replace />;
+  }
+
+  return children;
+}
+
+export default ProtectedRoute;

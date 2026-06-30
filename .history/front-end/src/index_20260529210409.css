@@ -1,0 +1,66 @@
+/* ========== STYLE NAVBAR SUPERPROF LIKE ========== */
+
+/* Style général de la navbar */
+.navbar {
+  background-color: white !important;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Bouton "Devenir tuteur" - Style like Superprof */
+.btn-outline-primary {
+  background-color: transparent !important;
+  color: #0d6efd !important;
+  border: 2px solid #0d6efd !important;
+  border-radius: 40px !important;
+  padding: 8px 24px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: #0d6efd !important;
+  color: white !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+/* Bouton "Se connecter" - Style like Superprof */
+.btn-primary {
+  background-color: #0d6efd !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 40px !important;
+  padding: 8px 24px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+/* Ajustement des boutons dans la navbar */
+.navbar .d-flex .btn {
+  margin-left: 8px;
+  font-family: var(--police-corps);
+  letter-spacing: 0.3px;
+}
+
+/* Effet actif au clic */
+.btn-primary:active,
+.btn-outline-primary:active {
+  transform: translateY(1px);
+}
+
+/* Version responsive pour mobile */
+@media (max-width: 768px) {
+  .btn-outline-primary,
+  .btn-primary {
+    padding: 6px 16px !important;
+    font-size: 12px !important;
+  }
+}

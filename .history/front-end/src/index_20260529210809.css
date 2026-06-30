@@ -1,0 +1,34 @@
+/* Style entreprise - Boutons avec contraste fort */
+.btn-outline-primary {
+  background: transparent !important;
+  color: #374151 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 8px 20px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  transition: all 0.15s ease !important;
+}
+
+.btn-outline-primary:hover {
+  background: #f9fafb !important;
+  border-color: #0d6efd !important;
+  color: #0d6efd !important;
+}
+
+.btn-primary {
+  background: #0d6efd !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 8px 20px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  transition: all 0.15s ease !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+  background: #005bd1 !important;
+  box-shadow: 0 2px 5px rgba(0, 91, 209, 0.2);
+}

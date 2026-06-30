@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-light: #f8f9fc;
+    --card-light: #ffffff;
+    --text-light: #07090d;
+    --muted-light: #4a5568;
+    --border-light: rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark {
+    --bg-light: #000000;
+    --card-light: #0a0a0c;
+    --text-light: #fcfdff;
+    --muted-light: #a1a4a5;
+    --border-light: rgba(255, 255, 255, 0.1);
+  }
+  
+  body {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    font-family: "Hanken Grotesk", sans-serif;
+  }
+}

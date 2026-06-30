@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learnect.ma - Soutien scolaire au Maroc</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Personnaliser Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'accent-orange': '#e04f00',
+              'accent-blue': '#1c64f2',
+              'accent-green': '#047857',
+              'accent-red': '#da1f1f',
+            },
+            fontFamily: {
+              'garamond': ['EB Garamond', 'serif'],
+              'hanken': ['Hanken Grotesk', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Hanken Grotesk', sans-serif;
+      }
+      .dark {
+        background-color: #000000;
+        color: #fcfdff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

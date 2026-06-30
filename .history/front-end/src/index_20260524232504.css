@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;800&display=swap');
+
+:root {
+    --green: #10B981;
+    --green-dark: #059669;
+    --green-light: #D1FAE5;
+    --navy: #0F172A;
+    --navy-2: #1E293B;
+    --white: #FFFFFF;
+    --bg: #F0FDF4;
+    --gray: #6B7280;
+    --border: #E2E8F0;
+    --text: #0F172A;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #F8FAFC;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; }
+
+::-webkit-scrollbar { width:6px }
+::-webkit-scrollbar-track { background:#F1F5F9 }
+::-webkit-scrollbar-thumb { background:#CBD5E1; border-radius:3px }

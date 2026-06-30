@@ -1,0 +1,36 @@
+/* Style ultra-premium - Boutons arrondis minimalistes */
+.btn-outline-primary {
+  background: transparent !important;
+  color: #1d1d1f !important;
+  border: 1px solid #d2d2d7 !important;
+  border-radius: 980px !important;
+  padding: 8px 24px !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1) !important;
+  backdrop-filter: blur(0px);
+}
+
+.btn-outline-primary:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: #86868b !important;
+  transform: scale(1.02);
+}
+
+.btn-primary {
+  background: #0071e3 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 980px !important;
+  padding: 8px 28px !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1) !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+  background: #0077ed !important;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25);
+}

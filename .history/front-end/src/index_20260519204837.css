@@ -1,0 +1,496 @@
+/* src/index.css */
+
+/* ═══════════════════════════════
+   VARIABLES COULEURS LEARNECT
+═══════════════════════════════ */
+:root{
+    --primary:    #2563EB;
+    --primary-dark: #1D4ED8;
+    --secondary:  #FF4D00;
+    --dark:       #0F1B2D;
+    --light:      #F8FAFF;
+    --gray:       #6B7280;
+    --success:    #10B981;
+    --warning:    #F59E0B;
+    --border:     #E5E7EB;
+    --shadow:     0 4px 20px rgba(37,99,235,0.10);
+    --shadow-lg:  0 10px 40px rgba(37,99,235,0.15);
+    --radius:     12px;
+    --radius-lg:  20px;
+    --font:       'Inter', sans-serif;
+}
+
+/* ═══════════════════════════════
+   BASE
+═══════════════════════════════ */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: var(--font);
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+/* ═══════════════════════════════
+   SCROLLBAR
+═══════════════════════════════ */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#f1f1f1}
+::-webkit-scrollbar-thumb{
+    background: var(--primary);
+    border-radius:10px;
+}
+
+/* ═══════════════════════════════
+   NAVBAR
+═══════════════════════════════ */
+.learnect-navbar{
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.learnect-logo{
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.learnect-logo span{
+    color: var(--secondary);
+}
+
+/* ═══════════════════════════════
+   BOUTONS
+═══════════════════════════════ */
+.btn-learnect{
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-learnect:hover{
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+    color: white;
+}
+
+.btn-outline-learnect{
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 0.55rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-outline-learnect:hover{
+    background: var(--primary);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-secondary-learnect{
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary-learnect:hover{
+    background: #e04400;
+    transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════
+   CARDS
+═══════════════════════════════ */
+.learnect-card{
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.learnect-card:hover{
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    border-color: var(--primary);
+}
+
+/* ═══════════════════════════════
+   TEACHER CARD
+═══════════════════════════════ */
+.teacher-card{
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.teacher-card:hover{
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-6px);
+    border-color: var(--primary);
+}
+
+.teacher-card .teacher-photo{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
+}
+
+.teacher-card .badge-verified{
+    background: #ECFDF5;
+    color: var(--success);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.teacher-card .tarif{
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.teacher-card .stars{
+    color: #F59E0B;
+    font-size: 0.85rem;
+}
+
+/* ═══════════════════════════════
+   HERO SECTION
+═══════════════════════════════ */
+.hero-section{
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #EDE9FE 100%);
+    padding: 5rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before{
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.hero-title{
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.hero-title span{
+    color: var(--primary);
+}
+
+/* ═══════════════════════════════
+   SEARCH BOX
+═══════════════════════════════ */
+.search-box{
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 0.5rem;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--border);
+}
+
+.search-box input,
+.search-box select{
+    border: none;
+    outline: none;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    background: transparent;
+    min-width: 0;
+}
+
+.search-box .divider{
+    width: 1px;
+    height: 30px;
+    background: var(--border);
+}
+
+.search-btn{
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.search-btn:hover{
+    background: var(--primary-dark);
+}
+
+/* ═══════════════════════════════
+   SUBJECT TAGS
+═══════════════════════════════ */
+.subject-tag{
+    background: white;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.subject-tag:hover,
+.subject-tag.active{
+    background: var(--primary);
+    color: white;
+}
+
+/* ═══════════════════════════════
+   STATS CARDS
+═══════════════════════════════ */
+.stat-card{
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid var(--border);
+}
+
+.stat-card .stat-number{
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.stat-card .stat-label{
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
+
+/* ═══════════════════════════════
+   FORMS
+═══════════════════════════════ */
+.learnect-form .form-label{
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+}
+
+.learnect-form .form-control,
+.learnect-form .form-select{
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.learnect-form .form-control:focus,
+.learnect-form .form-select:focus{
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    outline: none;
+}
+
+/* ═══════════════════════════════
+   DASHBOARD
+═══════════════════════════════ */
+.dashboard-sidebar{
+    background: var(--dark);
+    min-height: 100vh;
+    padding: 1.5rem;
+    position: sticky;
+    top: 0;
+}
+
+.dashboard-sidebar .nav-item a{
+    color: rgba(255,255,255,0.7);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.dashboard-sidebar .nav-item a:hover,
+.dashboard-sidebar .nav-item a.active{
+    background: rgba(37,99,235,0.3);
+    color: white;
+}
+
+.stat-dashboard-card{
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    border-left: 4px solid var(--primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ═══════════════════════════════
+   BADGES
+═══════════════════════════════ */
+.badge-status{
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-confirmee{background:#ECFDF5;color:#059669}
+.badge-en_attente{background:#FEF3C7;color:#D97706}
+.badge-annulee{background:#FEE2E2;color:#DC2626}
+.badge-terminee{background:#EDE9FE;color:#7C3AED}
+
+/* ═══════════════════════════════
+   AVATAR
+═══════════════════════════════ */
+.avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+}
+
+.avatar-lg{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
+}
+
+.avatar-xl{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary);
+}
+
+/* ═══════════════════════════════
+   ANIMATIONS
+═══════════════════════════════ */
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.05)}
+}
+
+.fade-in{
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* ═══════════════════════════════
+   LOADING
+═══════════════════════════════ */
+.loading-spinner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+.spinner{
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+/* ═══════════════════════════════
+   EMPTY STATE
+═══════════════════════════════ */
+.empty-state{
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--gray);
+}
+
+.empty-state .empty-icon{
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* ═══════════════════════════════
+   MOBILE RESPONSIVE
+═══════════════════════════════ */
+@media(max-width:768px){
+    .hero-title{font-size:2rem}
+    .search-box{flex-direction:column}
+    .dashboard-sidebar{display:none}
+}

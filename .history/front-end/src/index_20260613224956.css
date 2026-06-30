@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --canvas: #f8f9fc;
+    --surface-card: #ffffff;
+    --surface-elevated: #f1f3f5;
+    --surface-deep: #edf2f7;
+    --hairline: rgba(0, 0, 0, 0.06);
+    --hairline-strong: rgba(0, 0, 0, 0.12);
+    --ink: #07090d;
+    --charcoal: #4a5568;
+    --mute: #718096;
+    --stone: #a0aec0;
+    --accent-orange: #e04f00;
+    --accent-blue: #1c64f2;
+    --accent-green: #047857;
+    --accent-red: #da1f1f;
+  }
+
+  .dark {
+    --canvas: #000000;
+    --surface-card: #0a0a0c;
+    --surface-elevated: #101012;
+    --surface-deep: #06060a;
+    --hairline: rgba(255, 255, 255, 0.06);
+    --hairline-strong: rgba(255, 255, 255, 0.14);
+    --ink: #fcfdff;
+    --charcoal: rgba(252, 253, 255, 0.7);
+    --mute: #a1a4a5;
+    --stone: #464a4d;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: "Hanken Grotesk", sans-serif;
+  }
+}
+
+@layer components {
+  .bg-canvas { background-color: var(--canvas); }
+  .bg-surface-card { background-color: var(--surface-card); }
+  .bg-surface-elevated { background-color: var(--surface-elevated); }
+  .bg-surface-deep { background-color: var(--surface-deep); }
+  .border-hairline { border-color: var(--hairline); }
+  .border-hairline-strong { border-color: var(--hairline-strong); }
+  .text-ink { color: var(--ink); }
+  .text-charcoal { color: var(--charcoal); }
+  .text-mute { color: var(--mute); }
+  .text-accent-orange { color: var(--accent-orange); }
+  .bg-accent-orange { background-color: var(--accent-orange); }
+}

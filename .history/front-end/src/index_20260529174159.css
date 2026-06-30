@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --couleur-principale: #0d6efd;
+  --couleur-principale-hover: #0b5ed7;
+  --couleur-texte: #1e293b;
+  --couleur-texte-secondaire: #64748b;
+  --couleur-fond: #f8fafc;
+  --couleur-carte: #ffffff;
+  --couleur-bordure: #e2e8f0;
+  --police-titre: 'Space Grotesk', system-ui, sans-serif;
+  --police-corps: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--police-corps);
+  background-color: var(--couleur-fond);
+  color: var(--couleur-texte);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--police-titre);
+  font-weight: 700;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }

@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display-xxl: "EB Garamond", serif;
+  --font-display-xl: "EB Garamond", serif;
+  --font-display-lg: "Hanken Grotesk", sans-serif;
+  --font-heading-md: "Hanken Grotesk", sans-serif;
+  --font-heading-sm: "Hanken Grotesk", sans-serif;
+  --font-subtitle: "Hanken Grotesk", sans-serif;
+  --font-body-lg: "Hanken Grotesk", sans-serif;
+  --font-body-md: "Hanken Grotesk", sans-serif;
+  --font-body-sm: "Inter", sans-serif;
+  --font-button-md: "Inter", sans-serif;
+  --font-button-sm: "Hanken Grotesk", sans-serif;
+  --font-caption: "Inter", sans-serif;
+  --font-code-md: "JetBrains Mono", monospace;
+  
+  --color-canvas: var(--canvas);
+  --color-surface-card: var(--surface-card);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-deep: var(--surface-deep);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-divider-soft: var(--divider-soft);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-charcoal: var(--charcoal);
+  --color-mute: var(--mute);
+  --color-ash: var(--ash);
+  --color-stone: var(--stone);
+  --color-primary: var(--primary);
+  
+  --color-accent-orange: var(--accent-orange);
+  --color-accent-orange-glow: var(--accent-orange-glow);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-blue-glow: var(--accent-blue-glow);
+  --color-accent-green: var(--accent-green);
+  --color-accent-green-glow: var(--accent-green-glow);
+  --color-accent-red: var(--accent-red);
+  --color-accent-red-glow: var(--accent-red-glow);
+}
+
+:root {
+  --canvas: #f8f9fc;
+  --surface-card: #ffffff;
+  --surface-elevated: #f1f3f5;
+  --surface-deep: #edf2f7;
+  --hairline: rgba(0, 0, 0, 0.06);
+  --hairline-strong: rgba(0, 0, 0, 0.12);
+  --divider-soft: rgba(0, 0, 0, 0.03);
+  --ink: #07090d;
+  --body: #2d3139;
+  --charcoal: #4a5568;
+  --mute: #718096;
+  --ash: #4a5568;
+  --stone: #a0aec0;
+  --primary: #07090d;
+
+  --accent-orange: #e04f00;
+  --accent-orange-glow: rgba(224, 79, 0, 0.06);
+  --accent-yellow: #b45309;
+  --accent-blue: #1c64f2;
+  --accent-blue-glow: rgba(28, 100, 242, 0.05);
+  --accent-green: #047857;
+  --accent-green-glow: rgba(4, 120, 87, 0.08);
+  --accent-red: #da1f1f;
+  --accent-red-glow: rgba(218, 31, 31, 0.06);
+  
+  --gradient-glow-bg: rgba(248, 249, 252, 0);
+}
+
+.dark {
+  --canvas: #000000;
+  --surface-card: #0a0a0c;
+  --surface-elevated: #101012;
+  --surface-deep: #06060a;
+  --hairline: rgba(255, 255, 255, 0.06);
+  --hairline-strong: rgba(255, 255, 255, 0.14);
+  --divider-soft: rgba(255, 255, 255, 0.04);
+  --ink: #fcfdff;
+  --body: rgba(252, 253, 255, 0.86);
+  --charcoal: rgba(252, 253, 255, 0.7);
+  --mute: #a1a4a5;
+  --ash: #888e90;
+  --stone: #464a4d;
+  --primary: #fcfdff;
+
+  --accent-orange: #ff801f;
+  --accent-orange-glow: rgba(255, 89, 0, 0.12);
+  --accent-yellow: #ffc53d;
+  --accent-blue: #3b9eff;
+  --accent-blue-glow: rgba(0, 117, 255, 0.08);
+  --accent-green: #11ff99;
+  --accent-green-glow: rgba(34, 255, 153, 0.18);
+  --accent-red: #ff2047;
+  --accent-red-glow: rgba(255, 32, 71, 0.34);
+
+  --gradient-glow-bg: rgba(0, 0, 0, 0);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--font-body-md);
+  }
+
+  input, select, textarea {
+    outline: none;
+  }
+}
+
+.atmospheric-glow-orange {
+  background: radial-gradient(circle at 50% -20%, var(--accent-orange-glow) 0%, var(--gradient-glow-bg) 70%);
+}
+
+.atmospheric-glow-blue {
+  background: radial-gradient(circle at 50% 100%, var(--accent-blue-glow) 0%, var(--gradient-glow-bg) 70%);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.shimmer {
+  animation: shimmer 1.5s infinite;
+}

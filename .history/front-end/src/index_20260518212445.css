@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #1B2B5E;
+  --accent: #FF6B35;
+  --accent-light: #fff3ee;
+  --gray: #6B7280;
+  --light: #F8F9FC;
+  --white: #ffffff;
+  --shadow: 0 4px 24px rgba(27,43,94,0.10);
+  --shadow-hover: 0 8px 40px rgba(27,43,94,0.18);
+  --radius: 16px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--light);
+  color: #1a1a2e;
+}
+
+.btn-primary-custom {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-primary-custom:hover {
+  background: #e85a25;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255,107,53,0.4);
+  color: white;
+}
+
+.btn-outline-custom {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 11px 32px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-outline-custom:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.card-custom {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: none;
+}
+.card-custom:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.badge-custom {
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.input-custom {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  width: 100%;
+  outline: none;
+  transition: border 0.2s;
+  background: white;
+}
+.input-custom:focus {
+  border-color: var(--accent);
+}
+
+.star { color: #FBBF24; font-size: 0.9rem; }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.6s ease forwards; }
+.delay-1 { animation-delay: 0.1s; opacity: 0; }
+.delay-2 { animation-delay: 0.2s; opacity: 0; }
+.delay-3 { animation-delay: 0.3s; opacity: 0; }
+.delay-4 { animation-delay: 0.4s; opacity: 0; }
